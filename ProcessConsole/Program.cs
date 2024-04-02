@@ -23,19 +23,20 @@ namespace ProcessConsole
         }
         private static void WriteProcess()
         {
+
             ProcessServices processServices = new ProcessServices();
             //"Code", 
             string[] arr = ["devenv", "Spotify", "notepad++"];
             List<TasksDto> tasksDtos = processServices.GetTheProcesses(arr);
             foreach (TasksDto task in tasksDtos)
             {
-                Console.WriteLine($"\x1b[31mProcess Name: {task.ProcessName}\x1b[0m");
-                Console.WriteLine($"Machine Name: {task.MachineName}");
-                Console.WriteLine($"Start Time: {task.StartTime}");
-                Console.WriteLine($"End Time: {task.EndTime}");
-                Console.WriteLine(task.FullTime);
+                Console.WriteLine($"\x1b[31mProcess Name: {task.TaskName}\x1b[0m");
+                Console.WriteLine($"Start Time: {task.TaskOpening}");
+                Console.WriteLine($"End Time: {task.TaskClosing}");
+                Console.WriteLine(task.TaskDate);
                 Console.WriteLine();
             }
+
         }
     }
 }

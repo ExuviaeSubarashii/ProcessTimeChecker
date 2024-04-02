@@ -13,7 +13,7 @@ public partial class ProcessTimersContext : DbContext
     {
     }
 
-    public virtual DbSet<Tasks> Tasks { get; set; }
+    public virtual DbSet<TasksSaving> TasksSaving { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -22,6 +22,28 @@ public partial class ProcessTimersContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         OnModelCreatingPartial(modelBuilder);
+
+        modelBuilder.Entity<TasksSaving>(entity =>
+        {
+            entity.HasKey(e => e.TaskId);
+            entity.Property(e => e.TaskClosing)
+            .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .IsFixedLength(); ;
+            entity.Property(e => e.TaskOpening).HasMaxLength(100)
+                    .IsUnicode(false)
+                    .IsFixedLength(); ;
+            entity.Property(e => e.TaskDate).HasMaxLength(100)
+                    .IsUnicode(false)
+                    .IsFixedLength(); ;
+            entity.Property(e => e.TaskName)
+            .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .IsFixedLength(); ;
+            entity.Property(e => e.TaskHour).HasMaxLength(100)
+                    .IsUnicode(false)
+                    .IsFixedLength(); ;
+        });
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

@@ -2,10 +2,10 @@
 {
     public class TasksDto
     {
-        public required string ProcessName { get; set; }
-        public required string MachineName { get; set; }
-        public required DateTime StartTime { get; set; }
-        public required DateTime EndTime { get; set; }
-        public required string FullTime { get; set; }
+        public string TaskName { get; set; } = null!;
+        public int TaskHour { get; set; }
+        public DateTime TaskDate { get; set; }
+        public DateTime TaskOpening { get; set; }
+        public DateTime TaskClosing { get; set; }
     }
 }

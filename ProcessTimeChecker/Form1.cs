@@ -1,5 +1,4 @@
 using PTC.Domain.Dtos;
-using PTC.Domain.Models;
 using PTC.Services.Services;
 
 namespace ProcessTimeChecker
@@ -8,9 +7,11 @@ namespace ProcessTimeChecker
     {
 
         static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
-        public List<TasksDto> tasksDtos;
-        public Form1()
+        public List<TasksDto> tasksDtos = new();
+        private readonly ProcessServices _PS;
+        public Form1(ProcessServices PS)
         {
+            _PS = PS;
             InitializeComponent();
         }
 
@@ -24,32 +25,34 @@ namespace ProcessTimeChecker
 
         private void TimerEventProcessor(object? sender, EventArgs e)
         {
-            ProcessServices PS = new();
             dataGridView1.DataSource = new List<TasksDto>();
             string[] arr = ["Code", "devenv", "Spotify", "notepad++"];
-            tasksDtos = PS.GetTheProcesses(arr);
+            tasksDtos = _PS.GetTheProcesses(arr);
             dataGridView1.DataSource = tasksDtos;
 
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private async void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ProcessServices PS = new();
 
-            List<Tasks> tasks = new();
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            List<TasksDto> tasks = new();
             foreach (var item in tasksDtos)
             {
-                Tasks tasks2 = new()
+                TasksDto tasks2 = new()
                 {
-                    TaskClosing = item.EndTime,
+                    TaskClosing = item.TaskClosing,
                     TaskDate = DateTime.Today,
-                    TaskHour = Convert.ToInt32(item.FullTime),
-                    TaskName = item.ProcessName,
-                    TaskOpening = item.StartTime
+                    TaskHour = Convert.ToInt32(item.TaskHour),
+                    TaskName = item.TaskName,
+                    TaskOpening = item.TaskOpening
                 };
                 tasks.Add(tasks2);
             }
-            PS.SaveTaskInformation(tasks);
+            await _PS.SaveTaskInformation(tasks);
         }
     }
 }

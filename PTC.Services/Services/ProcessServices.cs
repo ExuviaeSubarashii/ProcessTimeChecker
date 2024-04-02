@@ -20,11 +20,11 @@ namespace PTC.Services.Services
                     {
                         TasksDto dto = new()
                         {
-                            ProcessName = localbyname[j].ProcessName,
-                            MachineName = localbyname[j].MachineName,
-                            StartTime = localbyname[j].StartTime,
-                            EndTime = localbyname[j].HasExited ? localbyname[j].ExitTime : DateTime.Now,
-                            FullTime = FormatTimeSpan(localbyname[j].StartTime - DateTime.Now),
+                            TaskName = localbyname[j].ProcessName,
+                            TaskOpening = localbyname[j].StartTime,
+                            TaskClosing = localbyname[j].HasExited ? localbyname[j].ExitTime : DateTime.Now,
+                            TaskHour = (int)(localbyname[j].StartTime - DateTime.Now).TotalHours,
+                            TaskDate = DateTime.Now,
                         };
                         tasks.Add(dto);
                     }
@@ -38,9 +38,32 @@ namespace PTC.Services.Services
             return $"{Math.Abs(timeSpan.Hours):00}:{Math.Abs(timeSpan.Minutes):00}:{Math.Abs(timeSpan.Seconds):00}.{Math.Abs(timeSpan.Milliseconds):000}";
         }
 
-        public Task<string> SaveTaskInformation(List<Tasks> task)
+        public async Task<string> SaveTaskInformation(List<TasksDto> task)
         {
-            throw new NotImplementedException();
+            try
+            {
+                foreach (var item in task)
+                {
+                    using (ProcessTimersContext context = new())
+                    {
+                        TasksSaving tasks = new()
+                        {
+                            TaskOpening = item.TaskOpening.ToString(),
+                            TaskClosing = item.TaskClosing.ToString(),
+                            TaskDate = item.TaskDate.ToString(),
+                            TaskHour = item.TaskHour.ToString(),
+                            TaskName = item.TaskName.ToString(),
+                        };
+                        context.TasksSaving.Add(tasks);
+                        await context.SaveChangesAsync();
+                    }
+                }
+                return "Succesful";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
