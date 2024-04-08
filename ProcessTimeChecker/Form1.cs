@@ -55,7 +55,6 @@ namespace ProcessTimeChecker
 		 {
 			TasksDto tasks2 = new()
 			{
-			   TaskClosing = item.TaskClosing,
 			   TaskDate = DateTime.Today,
 			   TaskHour = item.TaskHour,
 			   TaskName = item.TaskName,

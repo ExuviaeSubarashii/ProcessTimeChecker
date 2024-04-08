@@ -10,20 +10,20 @@ namespace PTC.Services.Services
    {
 	  public async Task<IEnumerable<TasksDto>> GetTheProcesses()
 	  {
-		 string[] processName = new string[] { "Code", "devenv", "Spotify", "notepad++", "Discord" };
+		 string[] processName = new string[] { "Code", "devenv", "Spotify", "notepad++", "Discord", "chrome" };
 
-		 List<TasksDto> tasks = new List<TasksDto>();
+		 List<TasksDto> tasks = new();
 
 		 foreach (var item in processName)
 		 {
 			Process? localbyname = Process.GetProcessesByName(item).FirstOrDefault();
+
 			if (localbyname != null)
 			{
 			   TasksDto dto = new TasksDto
 			   {
 				  TaskName = localbyname.ProcessName,
 				  TaskOpening = localbyname.StartTime,
-				  TaskClosing = localbyname.HasExited ? localbyname.ExitTime : DateTime.Now,
 				  TaskHour = FormatTimeSpan(localbyname.StartTime),
 				  TaskDate = DateTime.Now
 			   };
@@ -39,7 +39,6 @@ namespace PTC.Services.Services
 		 int minutes = timeDifference.Minutes;
 		 return $"{totalHours}:{minutes}";
 	  }
-
 	  public async Task SaveTaskInformation(List<TasksDto> task)
 	  {
 		 try
@@ -53,7 +52,6 @@ namespace PTC.Services.Services
 				  TasksSaving tasks = new()
 				  {
 					 TaskOpening = item.TaskOpening,
-					 TaskClosing = item.TaskClosing,
 					 TaskDate = item.TaskDate,
 					 TaskHour = FormatTimeSpan(item.TaskOpening),
 					 TaskName = item.TaskName.ToString(),

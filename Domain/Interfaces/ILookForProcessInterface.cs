@@ -2,9 +2,9 @@
 
 namespace PTC.Domain.Interfaces
 {
-	public interface ILookForProcessInterface
-	{
-		Task<IEnumerable<TasksDto>> GetTheProcesses();
-		Task SaveTaskInformation(List<TasksDto> task);
-	}
+   public interface ILookForProcessInterface
+   {
+	  Task<IEnumerable<TasksDto>> GetTheProcesses();
+	  Task SaveTaskInformation(List<TasksDto> task);
+   }
 }
