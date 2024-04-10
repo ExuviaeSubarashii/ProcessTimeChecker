@@ -8,8 +8,6 @@ namespace PTC.Services.Services
 {
 	public class ProcessServices() : ILookForProcessInterface
 	{
-
-
 		public async Task<List<TasksDto>> GetTheProcesses()
 		{
 			List<TasksDto> tasks = new();
@@ -70,7 +68,6 @@ namespace PTC.Services.Services
 				throw;
 			}
 		}
-
 		public async Task<List<CurrentlyAddedTasksDto>> GetCurrentlyAddedTasks()
 		{
 			using (ProcessTimersContext context = new())
@@ -87,6 +84,22 @@ namespace PTC.Services.Services
 				else
 				{
 					return new List<CurrentlyAddedTasksDto>();
+				}
+			}
+		}
+		public async Task DeleteTask(string taskName)
+		{
+			using (ProcessTimersContext context = new())
+			{
+				var doesTaskExist = await context.NewTaskNames.FirstOrDefaultAsync(task => task.ApplicationName == taskName);
+				if (doesTaskExist == null)
+				{
+
+				}
+				else
+				{
+					context.NewTaskNames.Remove(doesTaskExist);
+					await context.SaveChangesAsync();
 				}
 			}
 		}

@@ -6,7 +6,7 @@ namespace ProcessTimeChecker
 	public partial class AddNewAppForm : Form
 	{
 		private readonly ProcessServices _PS;
-
+		public static string selectedTask = "";
 		public AddNewAppForm(ProcessServices PS)
 		{
 			InitializeComponent();
@@ -14,25 +14,24 @@ namespace ProcessTimeChecker
 		}
 		private async void AddNewAppForm_Load(object sender, EventArgs e)
 		{
-			List<CurrentlyAddedTasksDto> tasks = (List<CurrentlyAddedTasksDto>)await GetCurrentTasks();
-			if (tasks != null)
-			{
-				foreach (var task in tasks)
-				{
-					listView1.Items.Add(task.TaskName);
-				}
-			}
+			await GetCurrentTasks();
 		}
-		private async Task<IEnumerable<CurrentlyAddedTasksDto>> GetCurrentTasks()
+		private async Task GetCurrentTasks()
 		{
 			List<CurrentlyAddedTasksDto> tasks = await _PS.GetCurrentlyAddedTasks();
 			if (tasks == null)
 			{
-				return new List<CurrentlyAddedTasksDto>();
+				return;
 			}
 			else
 			{
-				return tasks.ToList();
+				if (tasks != null)
+				{
+					foreach (var task in tasks)
+					{
+						listView1.Items.Add(task.TaskName);
+					}
+				}
 			}
 
 		}
@@ -46,6 +45,34 @@ namespace ProcessTimeChecker
 			if (!string.IsNullOrEmpty(taskName) || !string.IsNullOrWhiteSpace(taskName))
 			{
 				await Task.Run(() => AddNewTask(taskName));
+			}
+		}
+
+		private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (listView1.SelectedItems.Count > 0)
+			{
+				selectedTask = listView1.SelectedItems[0].Text;
+			}
+		}
+
+		private async void listView1_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyValue == (char)Keys.Delete && !string.IsNullOrEmpty(selectedTask) && !string.IsNullOrWhiteSpace(selectedTask))
+			{
+				string msg = $"{selectedTask} Uygulamasını İzleme Listesinden Çıkarmak İstediğinize Emin Misiniz? Sonradan Tekrar Ekleyebilirsiniz.";
+				string title = "Uygulama Kaldırma";
+				MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+				DialogResult dialog = MessageBox.Show(msg, title, buttons);
+				if (dialog == DialogResult.Yes)
+				{
+					await Task.Run(() => _PS.DeleteTask(selectedTask));
+					this.Close();
+				}
+				else
+				{
+					this.Close();
+				}
 			}
 		}
 	}
