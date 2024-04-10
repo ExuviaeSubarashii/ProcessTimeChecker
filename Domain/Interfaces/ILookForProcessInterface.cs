@@ -6,7 +6,11 @@ namespace PTC.Domain.Interfaces
 	{
 		Task<List<TasksDto>> GetTheProcesses();
 		Task SaveTaskInformation(string taskName);
-		Task<List<CurrentlyAddedTasksDto>> GetCurrentlyAddedTasks();
+		Task<List<string>> GetCurrentlyAddedTasks();
 		Task DeleteTask(string taskName);
+		Task SaveTaskInformationByContext(string taskName);
+		Task<List<TasksDto>> GetTheProcessesByContext();
+		Task<List<CurrentlyAddedTasksDto>> GetCurrentlyAddedTasksByContext();
+		Task DeleteTaskByContext(string taskName);
 	}
 }

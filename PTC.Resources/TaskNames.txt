@@ -1,0 +1,1 @@
+Code,devenv,Spotify,notepad++,RiotClientService,discord

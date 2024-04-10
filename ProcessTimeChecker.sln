@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessTimeChecker", "ProcessTimeChecker\ProcessTimeChecker.csproj", "{1EF298EC-FB5F-4B71-B198-41A3FCC8ABC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessTimeChecker", "ProcessTimeChecker\ProcessTimeChecker.csproj", "{1EF298EC-FB5F-4B71-B198-41A3FCC8ABC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{6540817E-DD7A-4CE9-BD06-1C24EA487C89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTC.Domain", "Domain\PTC.Domain.csproj", "{58A412B4-95E6-4C3E-99AD-182E22BD19FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTC.Domain", "Domain\PTC.Domain.csproj", "{58A412B4-95E6-4C3E-99AD-182E22BD19FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessConsole", "ProcessConsole\ProcessConsole.csproj", "{D83DD439-5F8A-4A6F-8384-662BB04807C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessConsole", "ProcessConsole\ProcessConsole.csproj", "{D83DD439-5F8A-4A6F-8384-662BB04807C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTC.Services", "PTC.Services\PTC.Services.csproj", "{93BB22FA-8E95-489E-B634-4DB9B2C99FAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTC.Services", "PTC.Services\PTC.Services.csproj", "{93BB22FA-8E95-489E-B634-4DB9B2C99FAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTC.Resources", "PTC.Resources\PTC.Resources.csproj", "{3A3499F3-A48C-4627-8E26-8609EFDD955B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{93BB22FA-8E95-489E-B634-4DB9B2C99FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93BB22FA-8E95-489E-B634-4DB9B2C99FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93BB22FA-8E95-489E-B634-4DB9B2C99FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A3499F3-A48C-4627-8E26-8609EFDD955B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A3499F3-A48C-4627-8E26-8609EFDD955B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A3499F3-A48C-4627-8E26-8609EFDD955B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A3499F3-A48C-4627-8E26-8609EFDD955B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{58A412B4-95E6-4C3E-99AD-182E22BD19FB} = {6540817E-DD7A-4CE9-BD06-1C24EA487C89}
 		{93BB22FA-8E95-489E-B634-4DB9B2C99FAA} = {6540817E-DD7A-4CE9-BD06-1C24EA487C89}
+		{3A3499F3-A48C-4627-8E26-8609EFDD955B} = {6540817E-DD7A-4CE9-BD06-1C24EA487C89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CDBD75BD-1375-4DAA-87DA-99FD0C50E1E5}

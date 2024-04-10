@@ -8,7 +8,11 @@ namespace PTC.Services.Services
 {
 	public class ProcessServices() : ILookForProcessInterface
 	{
-		public async Task<List<TasksDto>> GetTheProcesses()
+		public static string desktopDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+		public static string relativePath = @"ProcessTimeChecker\PTC.Resources\TaskNames.txt";
+		public static string filePath = Path.Combine(desktopDirectory, relativePath);
+
+		public async Task<List<TasksDto>> GetTheProcessesByContext()
 		{
 			List<TasksDto> tasks = new();
 
@@ -38,14 +42,7 @@ namespace PTC.Services.Services
 
 			return tasks.ToList();
 		}
-		private static string FormatTimeSpan(DateTime timeSpan)
-		{
-			TimeSpan timeDifference = DateTime.Now - timeSpan;
-			int totalHours = (int)timeDifference.TotalHours;
-			int minutes = timeDifference.Minutes;
-			return $"{totalHours}:{minutes}";
-		}
-		public async Task SaveTaskInformation(string taskName)
+		public async Task SaveTaskInformationByContext(string taskName)
 		{
 			try
 			{
@@ -68,7 +65,7 @@ namespace PTC.Services.Services
 				throw;
 			}
 		}
-		public async Task<List<CurrentlyAddedTasksDto>> GetCurrentlyAddedTasks()
+		public async Task<List<CurrentlyAddedTasksDto>> GetCurrentlyAddedTasksByContext()
 		{
 			using (ProcessTimersContext context = new())
 			{
@@ -87,7 +84,7 @@ namespace PTC.Services.Services
 				}
 			}
 		}
-		public async Task DeleteTask(string taskName)
+		public async Task DeleteTaskByContext(string taskName)
 		{
 			using (ProcessTimersContext context = new())
 			{
@@ -100,6 +97,98 @@ namespace PTC.Services.Services
 				{
 					context.NewTaskNames.Remove(doesTaskExist);
 					await context.SaveChangesAsync();
+				}
+			}
+		}
+		public async Task<List<TasksDto>> GetTheProcesses()
+		{
+			List<TasksDto> tasks = new();
+			if (!File.Exists(filePath))
+			{
+				throw new FileNotFoundException($"File not found: {filePath}");
+			}
+			string processName = await File.ReadAllTextAsync(filePath);
+			string[] processNames = processName.Split(',').ToArray();
+			foreach (var item in processNames)
+			{
+				Process? localbyname = Process.GetProcessesByName(item).FirstOrDefault();
+
+				if (localbyname != null)
+				{
+					TasksDto dto = new TasksDto
+					{
+						TaskName = localbyname.ProcessName,
+						TaskOpening = localbyname.StartTime,
+						TaskHour = FormatTimeSpan(localbyname.StartTime),
+						TaskDate = DateTime.Now
+					};
+					tasks.Add(dto);
+				}
+			}
+			return tasks.ToList();
+		}
+		private static string FormatTimeSpan(DateTime timeSpan)
+		{
+			TimeSpan timeDifference = DateTime.Now - timeSpan;
+			int totalHours = (int)timeDifference.TotalHours;
+			int minutes = timeDifference.Minutes;
+			return $"{totalHours}:{minutes}";
+		}
+		public async Task SaveTaskInformation(string taskName)
+		{
+			try
+			{
+				string processName = File.ReadAllText(filePath);
+				List<string> processNames = processName.Split(',').ToList();
+				bool? doesExists = processNames.Any(x => x.Contains(taskName));
+				if (doesExists == true)
+				{
+
+				}
+				else
+				{
+					processNames.Add(taskName);
+					File.Create(filePath).Close();
+					await using (StreamWriter outputFile = new(filePath, true))
+					{
+						outputFile.Write(string.Join(",", processNames));
+					}
+				}
+
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+		public async Task<List<string>> GetCurrentlyAddedTasks()
+		{
+			string processName = await File.ReadAllTextAsync(filePath);
+			List<string> processNames = processName.Split(',').ToList();
+
+			if (processNames.Any())
+			{
+				return processNames;
+			}
+			else
+			{
+				return new List<string>();
+			}
+
+		}
+		public async Task DeleteTask(string taskName)
+		{
+			string processName = File.ReadAllText(filePath);
+			List<string> processNames = processName.Split(',').ToList();
+			bool doesExists = processNames.Any(x => x.Contains(taskName));
+			if (doesExists)
+			{
+				processNames.Remove(taskName);
+				File.Create(filePath).Close();
+				await using (StreamWriter outputFile = new(filePath, true))
+				{
+					outputFile.Write(string.Join(",", processNames));
+
 				}
 			}
 		}

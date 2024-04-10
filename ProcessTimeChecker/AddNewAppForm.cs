@@ -1,5 +1,4 @@
-﻿using PTC.Domain.Dtos;
-using PTC.Services.Services;
+﻿using PTC.Services.Services;
 
 namespace ProcessTimeChecker
 {
@@ -18,7 +17,7 @@ namespace ProcessTimeChecker
 		}
 		private async Task GetCurrentTasks()
 		{
-			List<CurrentlyAddedTasksDto> tasks = await _PS.GetCurrentlyAddedTasks();
+			List<string> tasks = await _PS.GetCurrentlyAddedTasks();
 			if (tasks == null)
 			{
 				return;
@@ -29,7 +28,7 @@ namespace ProcessTimeChecker
 				{
 					foreach (var task in tasks)
 					{
-						listView1.Items.Add(task.TaskName);
+						listView1.Items.Add(task);
 					}
 				}
 			}
