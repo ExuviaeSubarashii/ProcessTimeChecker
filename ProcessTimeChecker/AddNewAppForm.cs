@@ -74,5 +74,10 @@ namespace ProcessTimeChecker
 				}
 			}
 		}
+
+		private async void button2_Click(object sender, EventArgs e)
+		{
+			await Task.Run(() => FileService.ClearFileContentAsync());
+		}
 	}
 }

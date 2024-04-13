@@ -42,7 +42,7 @@
 			dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			dataGridView1.Location = new Point(-1, 27);
 			dataGridView1.Name = "dataGridView1";
-			dataGridView1.Size = new Size(455, 754);
+			dataGridView1.Size = new Size(455, 744);
 			dataGridView1.TabIndex = 0;
 			// 
 			// menuStrip1
@@ -64,7 +64,7 @@
 			// yeniUygulamaEkleToolStripMenuItem
 			// 
 			yeniUygulamaEkleToolStripMenuItem.Name = "yeniUygulamaEkleToolStripMenuItem";
-			yeniUygulamaEkleToolStripMenuItem.Size = new Size(180, 22);
+			yeniUygulamaEkleToolStripMenuItem.Size = new Size(177, 22);
 			yeniUygulamaEkleToolStripMenuItem.Text = "Yeni Uygulama Ekle";
 			yeniUygulamaEkleToolStripMenuItem.Click += yeniUygulamaEkleToolStripMenuItem_Click;
 			// 

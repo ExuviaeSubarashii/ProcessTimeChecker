@@ -31,6 +31,7 @@
 			textBox1 = new TextBox();
 			listView1 = new ListView();
 			button1 = new Button();
+			button2 = new Button();
 			SuspendLayout();
 			// 
 			// textBox1
@@ -64,11 +65,22 @@
 			button1.UseVisualStyleBackColor = true;
 			button1.Click += button1_Click;
 			// 
+			// button2
+			// 
+			button2.Location = new Point(106, 12);
+			button2.Name = "button2";
+			button2.Size = new Size(86, 59);
+			button2.TabIndex = 3;
+			button2.Text = "Dosyayı Temizle";
+			button2.UseVisualStyleBackColor = true;
+			button2.Click += button2_Click;
+			// 
 			// AddNewAppForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(525, 285);
+			Controls.Add(button2);
 			Controls.Add(button1);
 			Controls.Add(listView1);
 			Controls.Add(textBox1);
@@ -84,5 +96,6 @@
 		private TextBox textBox1;
 		private ListView listView1;
 		private Button button1;
+		private Button button2;
 	}
 }

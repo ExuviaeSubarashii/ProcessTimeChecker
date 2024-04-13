@@ -91,7 +91,7 @@ namespace PTC.Services.Services
 				var doesTaskExist = await context.NewTaskNames.FirstOrDefaultAsync(task => task.ApplicationName == taskName);
 				if (doesTaskExist == null)
 				{
-
+					return;
 				}
 				else
 				{
@@ -103,29 +103,40 @@ namespace PTC.Services.Services
 		public async Task<List<TasksDto>> GetTheProcesses()
 		{
 			List<TasksDto> tasks = new();
-			if (!File.Exists(filePath))
-			{
-				throw new FileNotFoundException($"File not found: {filePath}");
-			}
-			string processName = await File.ReadAllTextAsync(filePath);
-			string[] processNames = processName.Split(',').ToArray();
-			foreach (var item in processNames)
-			{
-				Process? localbyname = Process.GetProcessesByName(item).FirstOrDefault();
 
-				if (localbyname != null)
+			if (await FileService.CheckIfFileExists())
+			{
+
+				string processName = await File.ReadAllTextAsync(filePath);
+				List<string> processNames = processName.Split(',').ToList();
+				processNames.RemoveAll(x => x == "");
+				if (processNames.Count > 0)
 				{
-					TasksDto dto = new TasksDto
+
+					foreach (var item in processNames)
 					{
-						TaskName = localbyname.ProcessName,
-						TaskOpening = localbyname.StartTime,
-						TaskHour = FormatTimeSpan(localbyname.StartTime),
-						TaskDate = DateTime.Now
-					};
-					tasks.Add(dto);
+						Process? localbyname = Process.GetProcessesByName(item).FirstOrDefault();
+
+						if (localbyname is { })
+						{
+							TasksDto dto = new TasksDto
+							{
+								TaskName = localbyname.ProcessName,
+								TaskOpening = localbyname.StartTime,
+								TaskHour = FormatTimeSpan(localbyname.StartTime),
+								TaskDate = DateTime.Now
+							};
+							tasks.Add(dto);
+						}
+					}
 				}
+				return tasks.ToList();
 			}
-			return tasks.ToList();
+			else
+			{
+				return tasks;
+			}
+
 		}
 		private static string FormatTimeSpan(DateTime timeSpan)
 		{
@@ -140,10 +151,15 @@ namespace PTC.Services.Services
 			{
 				string processName = File.ReadAllText(filePath);
 				List<string> processNames = processName.Split(',').ToList();
-				bool? doesExists = processNames.Any(x => x.Contains(taskName));
-				if (doesExists == true)
+				processNames.RemoveAll(x => x == "");
+				if (processNames.Count == 0)
 				{
-
+					processNames.Add(taskName);
+					File.Create(filePath).Close();
+					await using (StreamWriter outputFile = new(filePath, true))
+					{
+						outputFile.Write(taskName);
+					}
 				}
 				else
 				{

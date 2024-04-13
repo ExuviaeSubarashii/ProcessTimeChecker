@@ -9,6 +9,7 @@ namespace ProcessTimeChecker
 		static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
 		public List<TasksDto> tasksDtos = new();
 		private readonly ProcessServices _PS;
+
 		public Form1(ProcessServices PS)
 		{
 			_PS = PS;
@@ -20,7 +21,6 @@ namespace ProcessTimeChecker
 			myTimer.Tick += new EventHandler(TimerEventProcessor);
 			myTimer.Interval = 2000;
 			myTimer.Start();
-
 		}
 
 		private async void TimerEventProcessor(object? sender, EventArgs e)
