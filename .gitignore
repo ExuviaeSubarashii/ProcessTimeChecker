@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /PTC.Resources/TaskNames.txt
+/PTC.Resources/settings.json
+/PTC.Resources/settings.json
