@@ -9,15 +9,18 @@ namespace ProcessTimeChecker
 		static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
 		public List<TasksDto> tasksDtos = new();
 		private readonly ProcessServices _PS;
+		private readonly SettingsService _SS;
 
-		public Form1(ProcessServices PS)
+		public Form1(ProcessServices PS, SettingsService sS)
 		{
 			_PS = PS;
+			_SS = sS;
 			InitializeComponent();
 		}
 
-		private void Form1_Load(object sender, EventArgs e)
+		private async void Form1_Load(object sender, EventArgs e)
 		{
+			await UpdateTopMost();
 			myTimer.Tick += new EventHandler(TimerEventProcessor);
 			myTimer.Interval = 2000;
 			myTimer.Start();
@@ -34,6 +37,23 @@ namespace ProcessTimeChecker
 		{
 			AddNewAppForm addNewAppForm = new AddNewAppForm(_PS);
 			addNewAppForm.ShowDialog();
+		}
+
+
+		private async void checkToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			await _SS.ChangeTopMostPropertyAsync();
+		}
+
+		private async void stayOnTopToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			await _SS.ChangeTopMostPropertyAsync();
+			await UpdateTopMost();
+		}
+		private async Task UpdateTopMost()
+		{
+			bool isTopMost = await Task.Run(() => _SS.IsTopMostAsync());
+			this.TopMost = isTopMost;
 		}
 	}
 }

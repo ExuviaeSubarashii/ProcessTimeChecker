@@ -1,105 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PTC.Domain.Dtos;
+﻿using PTC.Domain.Dtos;
 using PTC.Domain.Interfaces;
-using PTC.Domain.Models;
 using System.Diagnostics;
 
 namespace PTC.Services.Services
 {
 	public class ProcessServices() : ILookForProcessInterface
 	{
-		public static string desktopDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-		public static string relativePath = @"ProcessTimeChecker\PTC.Resources\TaskNames.txt";
-		public static string filePath = Path.Combine(desktopDirectory, relativePath);
+		private readonly static string _desktopDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+		private readonly static string _relativePath = @"ProcessTimeChecker\PTC.Resources\TaskNames.txt";
+		private readonly static string _filePath = Path.Combine(_desktopDirectory, _relativePath);
 
-		public async Task<List<TasksDto>> GetTheProcessesByContext()
-		{
-			List<TasksDto> tasks = new();
-
-			using (ProcessTimersContext context = new())
-			{
-
-				List<NewTaskNames> processName = await context.NewTaskNames.ToListAsync();
-
-
-				foreach (var item in processName)
-				{
-					Process? localbyname = Process.GetProcessesByName(item.ApplicationName).FirstOrDefault();
-
-					if (localbyname != null)
-					{
-						TasksDto dto = new TasksDto
-						{
-							TaskName = localbyname.ProcessName,
-							TaskOpening = localbyname.StartTime,
-							TaskHour = FormatTimeSpan(localbyname.StartTime),
-							TaskDate = DateTime.Now
-						};
-						tasks.Add(dto);
-					}
-				}
-			}
-
-			return tasks.ToList();
-		}
-		public async Task SaveTaskInformationByContext(string taskName)
-		{
-			try
-			{
-				using (ProcessTimersContext context = new())
-				{
-					var doesTaskAlreadyExists = await context.NewTaskNames.FirstOrDefaultAsync(x => x.ApplicationName == taskName);
-					NewTaskNames newTask = new NewTaskNames
-					{
-						ApplicationName = taskName
-					};
-					if (doesTaskAlreadyExists == null)
-					{
-						await context.NewTaskNames.AddAsync(newTask);
-						await context.SaveChangesAsync();
-					}
-				}
-			}
-			catch (Exception)
-			{
-				throw;
-			}
-		}
-		public async Task<List<CurrentlyAddedTasksDto>> GetCurrentlyAddedTasksByContext()
-		{
-			using (ProcessTimersContext context = new())
-			{
-				var currentTasks = await context.NewTaskNames.Select(x => new CurrentlyAddedTasksDto
-				{
-					TaskName = x.ApplicationName,
-					Id = x.Id,
-				}).ToListAsync();
-				if (currentTasks.Any())
-				{
-					return currentTasks;
-				}
-				else
-				{
-					return new List<CurrentlyAddedTasksDto>();
-				}
-			}
-		}
-		public async Task DeleteTaskByContext(string taskName)
-		{
-			using (ProcessTimersContext context = new())
-			{
-				var doesTaskExist = await context.NewTaskNames.FirstOrDefaultAsync(task => task.ApplicationName == taskName);
-				if (doesTaskExist == null)
-				{
-					return;
-				}
-				else
-				{
-					context.NewTaskNames.Remove(doesTaskExist);
-					await context.SaveChangesAsync();
-				}
-			}
-		}
 		public async Task<List<TasksDto>> GetTheProcesses()
 		{
 			List<TasksDto> tasks = new();
@@ -107,7 +17,7 @@ namespace PTC.Services.Services
 			if (await FileService.CheckIfFileExists())
 			{
 
-				string processName = await File.ReadAllTextAsync(filePath);
+				string processName = await File.ReadAllTextAsync(_filePath);
 				List<string> processNames = processName.Split(',').ToList();
 				processNames.RemoveAll(x => x == "");
 				if (processNames.Count > 0)
@@ -149,14 +59,14 @@ namespace PTC.Services.Services
 		{
 			try
 			{
-				string processName = File.ReadAllText(filePath);
+				string processName = File.ReadAllText(_filePath);
 				List<string> processNames = processName.Split(',').ToList();
 				processNames.RemoveAll(x => x == "");
 				if (processNames.Count == 0)
 				{
 					processNames.Add(taskName);
-					File.Create(filePath).Close();
-					await using (StreamWriter outputFile = new(filePath, true))
+					File.Create(_filePath).Close();
+					await using (StreamWriter outputFile = new(_filePath, true))
 					{
 						outputFile.Write(taskName);
 					}
@@ -164,8 +74,8 @@ namespace PTC.Services.Services
 				else
 				{
 					processNames.Add(taskName);
-					File.Create(filePath).Close();
-					await using (StreamWriter outputFile = new(filePath, true))
+					File.Create(_filePath).Close();
+					await using (StreamWriter outputFile = new(_filePath, true))
 					{
 						outputFile.Write(string.Join(",", processNames));
 					}
@@ -179,7 +89,7 @@ namespace PTC.Services.Services
 		}
 		public async Task<List<string>> GetCurrentlyAddedTasks()
 		{
-			string processName = await File.ReadAllTextAsync(filePath);
+			string processName = await File.ReadAllTextAsync(_filePath);
 			List<string> processNames = processName.Split(',').ToList();
 
 			if (processNames.Any())
@@ -194,14 +104,14 @@ namespace PTC.Services.Services
 		}
 		public async Task DeleteTask(string taskName)
 		{
-			string processName = File.ReadAllText(filePath);
+			string processName = File.ReadAllText(_filePath);
 			List<string> processNames = processName.Split(',').ToList();
 			bool doesExists = processNames.Any(x => x.Contains(taskName));
 			if (doesExists)
 			{
 				processNames.Remove(taskName);
-				File.Create(filePath).Close();
-				await using (StreamWriter outputFile = new(filePath, true))
+				File.Create(_filePath).Close();
+				await using (StreamWriter outputFile = new(_filePath, true))
 				{
 					outputFile.Write(string.Join(",", processNames));
 

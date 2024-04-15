@@ -14,8 +14,9 @@ namespace ProcessTimeChecker
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
 			var processServices = new ProcessServices();
+			var settingsServices = new SettingsService();
 
-			Application.Run(new Form1(processServices));
+			Application.Run(new Form1(processServices, settingsServices));
 		}
 	}
 }

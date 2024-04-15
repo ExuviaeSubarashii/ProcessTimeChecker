@@ -30,6 +30,9 @@
 		{
 			dataGridView1 = new DataGridView();
 			menuStrip1 = new MenuStrip();
+			ayarlarToolStripMenuItem = new ToolStripMenuItem();
+			checkToolStripMenuItem = new ToolStripMenuItem();
+			stayOnTopToolStripMenuItem = new ToolStripMenuItem();
 			uygulamalarToolStripMenuItem = new ToolStripMenuItem();
 			yeniUygulamaEkleToolStripMenuItem = new ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -40,19 +43,41 @@
 			// 
 			dataGridView1.BackgroundColor = SystemColors.ActiveBorder;
 			dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dataGridView1.Location = new Point(-1, 27);
+			dataGridView1.Dock = DockStyle.Bottom;
+			dataGridView1.Location = new Point(0, 27);
 			dataGridView1.Name = "dataGridView1";
-			dataGridView1.Size = new Size(455, 744);
+			dataGridView1.Size = new Size(435, 739);
 			dataGridView1.TabIndex = 0;
 			// 
 			// menuStrip1
 			// 
-			menuStrip1.Items.AddRange(new ToolStripItem[] { uygulamalarToolStripMenuItem });
+			menuStrip1.Items.AddRange(new ToolStripItem[] { ayarlarToolStripMenuItem, uygulamalarToolStripMenuItem });
 			menuStrip1.Location = new Point(0, 0);
 			menuStrip1.Name = "menuStrip1";
-			menuStrip1.Size = new Size(448, 24);
+			menuStrip1.Size = new Size(435, 24);
 			menuStrip1.TabIndex = 1;
 			menuStrip1.Text = "menuStrip1";
+			// 
+			// ayarlarToolStripMenuItem
+			// 
+			ayarlarToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { checkToolStripMenuItem, stayOnTopToolStripMenuItem });
+			ayarlarToolStripMenuItem.Name = "ayarlarToolStripMenuItem";
+			ayarlarToolStripMenuItem.Size = new Size(56, 20);
+			ayarlarToolStripMenuItem.Text = "Ayarlar";
+			// 
+			// checkToolStripMenuItem
+			// 
+			checkToolStripMenuItem.Name = "checkToolStripMenuItem";
+			checkToolStripMenuItem.Size = new Size(180, 22);
+			checkToolStripMenuItem.Text = "check";
+			checkToolStripMenuItem.Click += checkToolStripMenuItem_Click;
+			// 
+			// stayOnTopToolStripMenuItem
+			// 
+			stayOnTopToolStripMenuItem.Name = "stayOnTopToolStripMenuItem";
+			stayOnTopToolStripMenuItem.Size = new Size(180, 22);
+			stayOnTopToolStripMenuItem.Text = "Stay on Top";
+			stayOnTopToolStripMenuItem.Click += stayOnTopToolStripMenuItem_Click;
 			// 
 			// uygulamalarToolStripMenuItem
 			// 
@@ -73,7 +98,7 @@
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.GrayText;
-			ClientSize = new Size(448, 766);
+			ClientSize = new Size(435, 766);
 			Controls.Add(menuStrip1);
 			Controls.Add(dataGridView1);
 			ForeColor = SystemColors.ActiveCaptionText;
@@ -81,7 +106,7 @@
 			MainMenuStrip = menuStrip1;
 			Name = "Form1";
 			SizeGripStyle = SizeGripStyle.Hide;
-			StartPosition = FormStartPosition.CenterParent;
+			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Form1";
 			Load += Form1_Load;
 			((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -97,5 +122,8 @@
 		private MenuStrip menuStrip1;
 		private ToolStripMenuItem uygulamalarToolStripMenuItem;
 		private ToolStripMenuItem yeniUygulamaEkleToolStripMenuItem;
+		private ToolStripMenuItem ayarlarToolStripMenuItem;
+		private ToolStripMenuItem checkToolStripMenuItem;
+		private ToolStripMenuItem stayOnTopToolStripMenuItem;
 	}
 }
