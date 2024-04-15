@@ -1,0 +1,34 @@
+﻿<Window x:Class="ProcessTimeCheckerWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProcessTimeCheckerWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
+            <MenuItem Header="Ayarlar / Settings">
+                <MenuItem Name="StayOnTop"
+                          Header="Tepede Kalsın / Stay on Top"
+                          Click="StayOnTop_Click" />
+            </MenuItem>
+            <MenuItem Header="Uygulamalar / Apps">
+                <MenuItem Name="AddNewApp"
+                          Header="Yeni Uygulama Ekle / Add New Apps"
+                          Click="AddNewApp_Click" />
+            </MenuItem>
+        </Menu>
+
+        <Grid Grid.Row="1">
+            <DataGrid Name="dataGrid"
+                      ItemsSource="{Binding Tasks}"
+                      Margin="0" />
+        </Grid>
+    </Grid>
+</Window>

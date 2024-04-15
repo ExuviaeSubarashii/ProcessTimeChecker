@@ -21,6 +21,7 @@ namespace ProcessTimeChecker
 		private async void Form1_Load(object sender, EventArgs e)
 		{
 			await UpdateTopMost();
+
 			myTimer.Tick += new EventHandler(TimerEventProcessor);
 			myTimer.Interval = 2000;
 			myTimer.Start();
@@ -55,5 +56,6 @@ namespace ProcessTimeChecker
 			bool isTopMost = await Task.Run(() => _SS.IsTopMostAsync());
 			this.TopMost = isTopMost;
 		}
+
 	}
 }

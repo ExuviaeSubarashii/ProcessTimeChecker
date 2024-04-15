@@ -31,7 +31,6 @@
 			dataGridView1 = new DataGridView();
 			menuStrip1 = new MenuStrip();
 			ayarlarToolStripMenuItem = new ToolStripMenuItem();
-			checkToolStripMenuItem = new ToolStripMenuItem();
 			stayOnTopToolStripMenuItem = new ToolStripMenuItem();
 			uygulamalarToolStripMenuItem = new ToolStripMenuItem();
 			yeniUygulamaEkleToolStripMenuItem = new ToolStripMenuItem();
@@ -60,37 +59,30 @@
 			// 
 			// ayarlarToolStripMenuItem
 			// 
-			ayarlarToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { checkToolStripMenuItem, stayOnTopToolStripMenuItem });
+			ayarlarToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { stayOnTopToolStripMenuItem });
 			ayarlarToolStripMenuItem.Name = "ayarlarToolStripMenuItem";
-			ayarlarToolStripMenuItem.Size = new Size(56, 20);
-			ayarlarToolStripMenuItem.Text = "Ayarlar";
-			// 
-			// checkToolStripMenuItem
-			// 
-			checkToolStripMenuItem.Name = "checkToolStripMenuItem";
-			checkToolStripMenuItem.Size = new Size(180, 22);
-			checkToolStripMenuItem.Text = "check";
-			checkToolStripMenuItem.Click += checkToolStripMenuItem_Click;
+			ayarlarToolStripMenuItem.Size = new Size(109, 20);
+			ayarlarToolStripMenuItem.Text = "Ayarlar / Settings";
 			// 
 			// stayOnTopToolStripMenuItem
 			// 
 			stayOnTopToolStripMenuItem.Name = "stayOnTopToolStripMenuItem";
-			stayOnTopToolStripMenuItem.Size = new Size(180, 22);
-			stayOnTopToolStripMenuItem.Text = "Stay on Top";
+			stayOnTopToolStripMenuItem.Size = new Size(217, 22);
+			stayOnTopToolStripMenuItem.Text = "Tepede Kalsın / Stay on Top";
 			stayOnTopToolStripMenuItem.Click += stayOnTopToolStripMenuItem_Click;
 			// 
 			// uygulamalarToolStripMenuItem
 			// 
 			uygulamalarToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { yeniUygulamaEkleToolStripMenuItem });
 			uygulamalarToolStripMenuItem.Name = "uygulamalarToolStripMenuItem";
-			uygulamalarToolStripMenuItem.Size = new Size(86, 20);
-			uygulamalarToolStripMenuItem.Text = "Uygulamalar";
+			uygulamalarToolStripMenuItem.Size = new Size(124, 20);
+			uygulamalarToolStripMenuItem.Text = "Uygulamalar / Apps";
 			// 
 			// yeniUygulamaEkleToolStripMenuItem
 			// 
 			yeniUygulamaEkleToolStripMenuItem.Name = "yeniUygulamaEkleToolStripMenuItem";
-			yeniUygulamaEkleToolStripMenuItem.Size = new Size(177, 22);
-			yeniUygulamaEkleToolStripMenuItem.Text = "Yeni Uygulama Ekle";
+			yeniUygulamaEkleToolStripMenuItem.Size = new Size(267, 22);
+			yeniUygulamaEkleToolStripMenuItem.Text = "Yeni Uygulama Ekle / Add New Apps";
 			yeniUygulamaEkleToolStripMenuItem.Click += yeniUygulamaEkleToolStripMenuItem_Click;
 			// 
 			// Form1
@@ -123,7 +115,6 @@
 		private ToolStripMenuItem uygulamalarToolStripMenuItem;
 		private ToolStripMenuItem yeniUygulamaEkleToolStripMenuItem;
 		private ToolStripMenuItem ayarlarToolStripMenuItem;
-		private ToolStripMenuItem checkToolStripMenuItem;
 		private ToolStripMenuItem stayOnTopToolStripMenuItem;
 	}
 }

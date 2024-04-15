@@ -22,14 +22,24 @@ namespace ProcessTimeChecker
 			{
 				return;
 			}
-			else
+			if (listView1.InvokeRequired)
 			{
 				if (tasks != null)
 				{
 					foreach (var task in tasks)
 					{
-						listView1.Items.Add(task);
+						listView1.Invoke((Action)(() =>
+						{
+							listView1.Items.Add(task);
+						}));
 					}
+				}
+			}
+			else if (tasks != null)
+			{
+				foreach (var task in tasks)
+				{
+					listView1.Items.Add(task);
 				}
 			}
 
@@ -37,6 +47,9 @@ namespace ProcessTimeChecker
 		private async Task AddNewTask(string taskName)
 		{
 			await _PS.SaveTaskInformation(taskName);
+			ClearListview();
+			ClearTextBox();
+			await Task.Run(() => GetCurrentTasks());
 		}
 		private async void button1_Click(object sender, EventArgs e)
 		{
@@ -46,7 +59,6 @@ namespace ProcessTimeChecker
 				await Task.Run(() => AddNewTask(taskName));
 			}
 		}
-
 		private void listView1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (listView1.SelectedItems.Count > 0)
@@ -54,27 +66,43 @@ namespace ProcessTimeChecker
 				selectedTask = listView1.SelectedItems[0].Text;
 			}
 		}
-
+		private void ClearListview()
+		{
+			listView1.Invoke((Action)(() =>
+			{
+				listView1.Items.Clear();
+			}));
+		}
+		private void ClearTextBox()
+		{
+			textBox1.Invoke((Action)(() =>
+			{
+				textBox1.Text = "";
+			}));
+		}
 		private async void listView1_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyValue == (char)Keys.Delete && !string.IsNullOrEmpty(selectedTask) && !string.IsNullOrWhiteSpace(selectedTask))
 			{
-				string msg = $"{selectedTask} Uygulamasını İzleme Listesinden Çıkarmak İstediğinize Emin Misiniz? Sonradan Tekrar Ekleyebilirsiniz.";
+				string msg = $"{selectedTask} Uygulamasını İzleme Listesinden Çıkarmak İstediğinize Emin Misiniz? Sonradan Tekrar Ekleyebilirsiniz. / Are You Sure You Want Remove Task {selectedTask}? You Will be Able to Add It Again If You Change Your Mind.";
 				string title = "Uygulama Kaldırma";
 				MessageBoxButtons buttons = MessageBoxButtons.YesNo;
 				DialogResult dialog = MessageBox.Show(msg, title, buttons);
 				if (dialog == DialogResult.Yes)
 				{
 					await Task.Run(() => _PS.DeleteTask(selectedTask));
-					this.Close();
+					ClearListview();
+					await GetCurrentTasks();
+					ClearTextBox();
 				}
 				else
 				{
-					this.Close();
+					ClearListview();
+					await GetCurrentTasks();
+					ClearTextBox();
 				}
 			}
 		}
-
 		private async void button2_Click(object sender, EventArgs e)
 		{
 			await Task.Run(() => FileService.ClearFileContentAsync());
