@@ -8,16 +8,16 @@
         Title="AddNewApp" Height="400" Width="800" Loaded="Window_Loaded">
     <Grid Background="#E5E5E5">
 
-        <Button Name="ClearFile" Margin="8,50,0,0" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#4CAF50" Foreground="White" Height="30">
+        <Button Name="ClearFile" Margin="8,50,0,0" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#4CAF50" Foreground="White" Height="30" Width="165" Click="ClearFile_Click">
             <TextBlock Text="Dosyayı Temizle / Clear File" TextWrapping="Wrap" TextAlignment="Center"/>
         </Button>
-        <TextBox Name="NewTaskName" Margin="8,100,627,0" Background="#BDBDBD" Foreground="White" BorderBrush="#757575" VerticalAlignment="Top" Height="50" Width="165"/>
-        <Button Name="AddNewAppButton" Margin="10,170,0,0" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#2196F3" Foreground="White" Height="50" Width="170">
+        <TextBox Name="NewTaskNameBox" Margin="8,100,627,0" Background="#BDBDBD" Foreground="White" BorderBrush="#757575" VerticalAlignment="Top" Height="50" Width="165"/>
+        <Button Name="AddNewAppButton" Margin="10,170,0,0" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#2196F3" Foreground="White" Height="50" Width="170" Click="AddNewAppButton_Click">
             <TextBlock Text="Yeni Uygulama Ekle / Add New App" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>
         <Label Margin="13,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#757575">Uygulamaya tıkla ve DEL tuşuna bas.</Label>
         <Label Margin="224,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#757575">Click on the app and hit DEL button.</Label>
-        <ListView Name="listView" SelectionChanged="listView_SelectionChanged" Margin="212,42,22,42" Background="#FFFFFF" BorderBrush="#757575" Height="300"/>
+        <ListView Name="listView" SelectionChanged="listView_SelectionChanged" Margin="212,42,22,42" Background="#FFFFFF" BorderBrush="#757575" Height="300" PreviewKeyDown="listView_PreviewKeyDown"/>
     </Grid>
 
 </Window>
