@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProcessTimeCheckerWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="800" Loaded="Window_Loaded">
+        Title="MainWindow" Height="400" Width="800" Loaded="Window_Loaded" Icon="/PTC.png" WindowStartupLocation="CenterScreen">
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -17,6 +18,11 @@
                 <MenuItem Name="StayOnTop"
                           Header="Tepede Kalsın / Stay on Top"
                           Click="StayOnTop_Click" />
+                <MenuItem
+                    Header="Temayı Değiştir / Change Theme"
+                    Name="ChangeTheme"
+                    Click="ChangeTheme_Click"
+                    />
             </MenuItem>
             <MenuItem Header="Uygulamalar / Apps">
                 <MenuItem Name="AddNewApp"
@@ -26,9 +32,11 @@
         </Menu>
 
         <Grid Grid.Row="1">
-            <DataGrid Name="dataGrid"
+            <DataGrid Name="taskDataGrid"
                       ItemsSource="{Binding Tasks}"
-                      Margin="0" />
+                      Margin="0">
+               
+            </DataGrid>
         </Grid>
     </Grid>
 </Window>
