@@ -11,7 +11,7 @@
         <Button Name="ClearFile" Margin="8,50,0,0" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#4CAF50" Foreground="White" Height="30" Width="165" Click="ClearFile_Click">
             <TextBlock Text="Dosyayı Temizle / Clear File" TextWrapping="Wrap" TextAlignment="Center"/>
         </Button>
-        <TextBox Name="NewTaskNameBox" Margin="8,100,627,0" Background="#BDBDBD" Foreground="White" BorderBrush="#757575" VerticalAlignment="Top" Height="50" Width="165"/>
+        <TextBox Name="NewTaskNameBox" Margin="10,100,627,0" Background="#BDBDBD" Foreground="White" VerticalAlignment="Top" Height="50" Width="165"/>
         <Button Name="AddNewAppButton" Margin="10,170,0,0" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#2196F3" Foreground="White" Height="50" Width="170" Click="AddNewAppButton_Click">
             <TextBlock Text="Yeni Uygulama Ekle / Add New App" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>

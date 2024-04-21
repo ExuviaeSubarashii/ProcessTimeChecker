@@ -1,5 +1,7 @@
 ﻿using PTC.Domain.Dtos;
 using PTC.Services.Services;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,7 +19,10 @@ namespace ProcessTimeCheckerWPF
 		public List<TasksDto> tasksDtos = new();
 		private readonly ProcessServices _PS = new();
 		private readonly SettingsService _SS = new();
-
+		private static string desktopDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+		private static string relativePath = @"ProcessTimeChecker\ProcessTimeCheckerWPF\bin\Debug\net8.0-windows\ProcessTimeCheckerWPF.exe";
+		private static string filePath = Path.Combine(desktopDirectory, relativePath);
+		private static int refreshTime;
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -27,8 +32,9 @@ namespace ProcessTimeCheckerWPF
 		{
 			await UpdateTopMost();
 			await SetCurrentTheme();
+			refreshTime = await _SS.GetRefreshTime();
 			myTimer.Tick += new EventHandler(TimerEventProcessor);
-			myTimer.Interval = TimeSpan.FromSeconds(2);
+			myTimer.Interval = TimeSpan.FromSeconds(refreshTime);
 			myTimer.Start();
 		}
 		private async void TimerEventProcessor(object? sender, EventArgs e)
@@ -57,8 +63,9 @@ namespace ProcessTimeCheckerWPF
 
 		private async void ChangeTheme_Click(object sender, RoutedEventArgs e)
 		{
+			myTimer.Stop();
 
-			string msg = $"Temayı Değiştirmek İstiyor Musunuz? Bu Uygulamayı Yeniden Başlatacaktır. Eğer Yeniden Başlatmazsanız Uygulamayı Sonraki Açışınızda Tema Değişikliği Uygulanacaktır. / Would You Like to Change the Theme?? This will RESTART the app. If You Don't Choose To Restart the App, the Theme Change Will be Applied on Your Next Launch.";
+			string msg = $"Temayı Değiştirmek İstiyor Musunuz? Bu Uygulamayı Yeniden Başlatacaktır. Eğer Yeniden Başlatmazsanız Uygulamayı Sonraki Açışınızda Tema Değişikliği Uygulanacaktır. \n Would You Like to Change the Theme?? This will RESTART the app. If You Don't Choose To Restart the App, the Theme Change Will be Applied on Your Next Launch.";
 			string title = "Change Theme";
 			MessageBoxResult dialog = MessageBox.Show(msg,
 									  title,
@@ -67,16 +74,15 @@ namespace ProcessTimeCheckerWPF
 			if (dialog == MessageBoxResult.Yes)
 			{
 				await _SS.ChangeThemeAsync();
-				//string desktopDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-				//string relativePath = @"ProcessTimeChecker\ProcessTimeCheckerWPF\bin\Debug\net8.0-windows\ProcessTimeCheckerWPF.exe";
-				//string filePath = Path.Combine(desktopDirectory, relativePath);
-				//Process.Start(filePath);
-				//Application.Current.Shutdown();
+
+				Process.Start(filePath);
+				Application.Current.Shutdown();
 
 			}
 			else
 			{
 				await _SS.ChangeThemeAsync();
+				myTimer.Start();
 			}
 		}
 		private async Task SetCurrentTheme()
@@ -102,6 +108,12 @@ namespace ProcessTimeCheckerWPF
 				dataGridCellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, currentTheme == "Dark" ? Brushes.LightGray : Brushes.Black));
 				taskDataGrid.Resources.Add(typeof(DataGridCell), dataGridCellStyle);
 			}
+		}
+
+		private void ChangeRefreshTimer_Click(object sender, RoutedEventArgs e)
+		{
+			ChooseTimer chooseTimer = new ChooseTimer();
+			chooseTimer.ShowDialog();
 		}
 	}
 }
