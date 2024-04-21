@@ -1,6 +1,6 @@
-﻿using PTC.Services.Services;
+﻿using PTC.Domain.GlobalClasses;
+using PTC.Services.Services;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 
 namespace ProcessTimeCheckerWPF
@@ -12,9 +12,6 @@ namespace ProcessTimeCheckerWPF
 	{
 		private readonly SettingsService _SS = new();
 		private static int sliderValue;
-		private static string desktopDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-		private static string relativePath = @"ProcessTimeChecker\ProcessTimeCheckerWPF\bin\Debug\net8.0-windows\ProcessTimeCheckerWPF.exe";
-		private static string filePath = Path.Combine(desktopDirectory, relativePath);
 		public ChooseTimer()
 		{
 			InitializeComponent();
@@ -46,7 +43,7 @@ namespace ProcessTimeCheckerWPF
 				{
 
 					await _SS.SetRefreshTime(sliderValue);
-					Process.Start(filePath);
+					Process.Start(GlobalVariables.filePath);
 					Application.Current.Shutdown();
 				}
 				else
@@ -58,9 +55,9 @@ namespace ProcessTimeCheckerWPF
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			int data = await _SS.GetRefreshTime();
-			sliderValue = data;
-			slider.Value = data;
+			int currentRrate = await _SS.GetRefreshTime();
+			sliderValue = currentRrate;
+			slider.Value = currentRrate;
 		}
 	}
 }

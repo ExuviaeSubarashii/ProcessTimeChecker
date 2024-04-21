@@ -1,7 +1,7 @@
 ﻿using PTC.Domain.Dtos;
+using PTC.Domain.GlobalClasses;
 using PTC.Services.Services;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,10 +19,8 @@ namespace ProcessTimeCheckerWPF
 		public List<TasksDto> tasksDtos = new();
 		private readonly ProcessServices _PS = new();
 		private readonly SettingsService _SS = new();
-		private static string desktopDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-		private static string relativePath = @"ProcessTimeChecker\ProcessTimeCheckerWPF\bin\Debug\net8.0-windows\ProcessTimeCheckerWPF.exe";
-		private static string filePath = Path.Combine(desktopDirectory, relativePath);
-		private static int refreshTime;
+
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -34,7 +32,6 @@ namespace ProcessTimeCheckerWPF
 			await SetCurrentTheme();
 			int refreshTime = await _SS.GetRefreshTime();
 			refreshRateLabel.Content = $"Tekrarlama Hızı / Refresh Rate: {refreshTime}";
-			refreshTime = await _SS.GetRefreshTime();
 			myTimer.Tick += new EventHandler(TimerEventProcessor);
 			myTimer.Interval = TimeSpan.FromSeconds(refreshTime);
 			myTimer.Start();
@@ -77,7 +74,7 @@ namespace ProcessTimeCheckerWPF
 			{
 				await _SS.ChangeThemeAsync();
 
-				Process.Start(filePath);
+				Process.Start(GlobalVariables.filePath);
 				Application.Current.Shutdown();
 
 			}
