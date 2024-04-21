@@ -32,6 +32,8 @@ namespace ProcessTimeCheckerWPF
 		{
 			await UpdateTopMost();
 			await SetCurrentTheme();
+			int refreshTime = await _SS.GetRefreshTime();
+			refreshRateLabel.Content = $"Tekrarlama Hızı / Refresh Rate: {refreshTime}";
 			refreshTime = await _SS.GetRefreshTime();
 			myTimer.Tick += new EventHandler(TimerEventProcessor);
 			myTimer.Interval = TimeSpan.FromSeconds(refreshTime);

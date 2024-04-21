@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProcessTimeCheckerWPF"
         mc:Ignorable="d"
-        Title="ChooseTimer" Height="200" Width="400" Closing="Window_Closing" Loaded="Window_Loaded">
+        Title="ChooseTimer" Height="200" Width="400" Closing="Window_Closing" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
-        <Slider x:Name="slider" Minimum="0" Maximum="100" ValueChanged="slider_ValueChanged"/>
+        <Slider x:Name="slider" Minimum="0" Maximum="100" Margin="0,0,0,70" VerticalAlignment="Center" ValueChanged="slider_ValueChanged"/>
         <Label x:Name="label" Content="{Binding ElementName=slider, Path=Value}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

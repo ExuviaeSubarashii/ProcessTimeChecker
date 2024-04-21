@@ -56,9 +56,11 @@ namespace ProcessTimeCheckerWPF
 			}
 		}
 
-		private void Window_Loaded(object sender, RoutedEventArgs e)
+		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			sliderValue = 2;
+			int data = await _SS.GetRefreshTime();
+			sliderValue = data;
+			slider.Value = data;
 		}
 	}
 }

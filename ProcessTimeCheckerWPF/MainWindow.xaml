@@ -33,7 +33,7 @@
                           Header="Yeni Uygulama Ekle / Add New Apps"
                           Click="AddNewApp_Click" />
             </MenuItem>
-            
+            <Label Name="refreshRateLabel"/>
         </Menu>
 
         <Grid Grid.Row="1">

@@ -30,7 +30,6 @@ namespace PTC.Services.Services
 			}
 			return false;
 		}
-
 		public async Task ChangeTopMostPropertyAsync()
 		{
 			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
@@ -42,7 +41,6 @@ namespace PTC.Services.Services
 			}
 
 		}
-
 		public async Task<bool> CreateSettingsFileIfDoesntExistsAsync()
 		{
 			if (!File.Exists(filePath))
@@ -59,7 +57,6 @@ namespace PTC.Services.Services
 			}
 			return false;
 		}
-
 		public async Task ChangeThemeAsync()
 		{
 			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
@@ -88,7 +85,6 @@ namespace PTC.Services.Services
 			}
 			return "Dark";
 		}
-
 		public async Task<int> GetRefreshTime()
 		{
 			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
@@ -99,7 +95,6 @@ namespace PTC.Services.Services
 			}
 			return 2;
 		}
-
 		public async Task SetRefreshTime(int refreshTime)
 		{
 			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
