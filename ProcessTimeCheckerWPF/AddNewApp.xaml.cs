@@ -9,7 +9,10 @@ namespace ProcessTimeCheckerWPF
 	public partial class AddNewApp : Window
 	{
 		private readonly ProcessServices _PS = new();
+		private readonly SettingsService _SS = new();
 		public static string selectedTask = "";
+		private static string currentLanguage = null!;
+
 
 		public AddNewApp()
 		{
@@ -49,6 +52,8 @@ namespace ProcessTimeCheckerWPF
 		}
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			currentLanguage = await _SS.GetLanguage();
+			SetLanguage();
 			await GetCurrentTasks();
 		}
 
@@ -86,8 +91,11 @@ namespace ProcessTimeCheckerWPF
 		{
 			if (e.Key == System.Windows.Input.Key.Delete && !string.IsNullOrEmpty(selectedTask) && !string.IsNullOrWhiteSpace(selectedTask))
 			{
-				string msg = $"{selectedTask} Uygulamasını İzleme Listesinden Çıkarmak İstediğinize Emin Misiniz? Sonradan Tekrar Ekleyebilirsiniz. / Are You Sure You Want Remove Task {selectedTask}? You Will be Able to Add It Again If You Change Your Mind.";
-				string title = "Uygulama Kaldırma";
+				string msg = currentLanguage == "Turkish" ? $"{selectedTask} Uygulamasını İzleme Listesinden Çıkarmak İstediğinize Emin Misiniz? Sonradan Tekrar Ekleyebilirsiniz."
+									  : $"Are You Sure You Want Remove Task {selectedTask}? You Will be Able to Add It Again If You Change Your Mind.";
+
+				string title = currentLanguage == "Turkish" ? "Uygulama Kaldırma" : "Remove Application";
+
 				MessageBoxResult dialog = MessageBox.Show(msg,
 										  title,
 										  MessageBoxButton.YesNo,
@@ -106,6 +114,12 @@ namespace ProcessTimeCheckerWPF
 					ClearTextBox();
 				}
 			}
+		}
+		private void SetLanguage()
+		{
+			ClearFileText.Text = currentLanguage == "Turkish" ? "Dosyayı Temizle" : "Clear File";
+			AddNewAppText.Text = currentLanguage == "Turkish" ? "Yeni Uygulama Ekle" : "Add New App";
+			InformationLabel.Content = currentLanguage == "Turkish" ? "Silmek İçin Uygulamaya tıkla ve DEL tuşuna bas" : "Click on the app and hit DEL button to Delete";
 		}
 	}
 }

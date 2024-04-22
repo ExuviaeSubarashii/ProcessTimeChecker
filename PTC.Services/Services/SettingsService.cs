@@ -13,6 +13,7 @@ namespace PTC.Services.Services
 			public bool TopMost { get; set; }
 			public string CurrentTheme { get; set; } = null!;
 			public int RefreshTime { get; set; }
+			public string Language { get; set; } = null!;
 		}
 		private async Task<Settings> ReadAllDataAsync()
 		{
@@ -49,7 +50,8 @@ namespace PTC.Services.Services
 				{
 					TopMost = false,
 					CurrentTheme = "Dark",
-					RefreshTime = 2
+					RefreshTime = 2,
+					Language = "Turkish"
 				};
 				string jsonString = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
 				await File.WriteAllTextAsync(filePath, jsonString);
@@ -104,6 +106,22 @@ namespace PTC.Services.Services
 				string updatedJson = JsonSerializer.Serialize(data);
 				await File.WriteAllTextAsync(filePath, updatedJson);
 			}
+		}
+		public async Task SetLanguage()
+		{
+			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
+			{
+				var data = await ReadAllDataAsync();
+				string currentLang = data.Language == "Turkish" ? "English" : "Turkish";
+				data.Language = currentLang;
+				string updatedJson = JsonSerializer.Serialize(data);
+				await File.WriteAllTextAsync(filePath, updatedJson);
+			}
+		}
+		public async Task<string> GetLanguage()
+		{
+			var data = await ReadAllDataAsync();
+			return data.Language;
 		}
 	}
 }

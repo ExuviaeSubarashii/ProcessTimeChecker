@@ -9,5 +9,7 @@
 		Task<string> WhatThemeIsIt();
 		Task<int> GetRefreshTime();
 		Task SetRefreshTime(int refreshTime);
+		Task SetLanguage();
+		Task<string> GetLanguage();
 	}
 }

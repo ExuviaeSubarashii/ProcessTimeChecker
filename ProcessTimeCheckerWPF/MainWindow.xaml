@@ -6,31 +6,30 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="800" Loaded="Window_Loaded" Icon="/PTC.png" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
-            <MenuItem Header="Ayarlar / Settings">
+            <MenuItem Name="SettingsTop">
                 <MenuItem Name="StayOnTop"
-                          Header="Tepede Kalsın / Stay on Top"
                           Click="StayOnTop_Click" />
                 <MenuItem
-                    Header="Temayı Değiştir / Change Theme"
                     Name="ChangeTheme"
                     Click="ChangeTheme_Click"
                     />
                 <MenuItem
-                    Header="Tekrarlama Süresini Ayarla / Choose Refresh Timer"
                     Name="ChangeRefreshTimer"
                     Click="ChangeRefreshTimer_Click"
                     />
+                <MenuItem
+                    Name="ChangeLanguage"
+                    Click="ChangeLanguage_Click"/>
             </MenuItem>
-            <MenuItem Header="Uygulamalar / Apps">
+            <MenuItem Name="AddNewAppTop">
                 <MenuItem Name="AddNewApp"
-                          Header="Yeni Uygulama Ekle / Add New Apps"
                           Click="AddNewApp_Click" />
             </MenuItem>
             <Label Name="refreshRateLabel"/>

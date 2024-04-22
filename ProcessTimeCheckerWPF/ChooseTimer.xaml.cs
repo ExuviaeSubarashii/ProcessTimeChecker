@@ -12,6 +12,7 @@ namespace ProcessTimeCheckerWPF
 	{
 		private readonly SettingsService _SS = new();
 		private static int sliderValue;
+		private static string currentLanguage = null!;
 		public ChooseTimer()
 		{
 			InitializeComponent();
@@ -33,8 +34,11 @@ namespace ProcessTimeCheckerWPF
 			}
 			else
 			{
-				string msg = $"Yenileme Hızını {sliderValue}'ya Değiştirmek İstiyor Musunuz? Bu Uygulamayı Yeniden Başlatacaktır. \n Would You Like to Update the Refresh Timer to {sliderValue}? This Will Restart the App.";
-				string title = "Yenilenme Hızını Güncelle \n Update Refresh Timer";
+				string msg = currentLanguage == "Turkish" ? $"Yenileme Hızını {sliderValue}'ya Değiştirmek İstiyor Musunuz? Bu Uygulamayı Yeniden Başlatacaktır"
+									   : $"Would You Like to Update the Refresh Timer to {sliderValue}? This Will Restart the App.";
+
+				string title = currentLanguage == "Turkish" ? "Yenilenme Hızını Güncelle" : "Update Refresh Timer";
+
 				MessageBoxResult dialog = MessageBox.Show(msg,
 										  title,
 										  MessageBoxButton.YesNo,
@@ -56,6 +60,7 @@ namespace ProcessTimeCheckerWPF
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			int currentRrate = await _SS.GetRefreshTime();
+			currentLanguage = await _SS.GetLanguage();
 			sliderValue = currentRrate;
 			slider.Value = currentRrate;
 		}
