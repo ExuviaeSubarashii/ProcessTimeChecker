@@ -95,8 +95,9 @@ namespace ProcessTimeCheckerWPF
 			}
 			else
 			{
+				await _SS.ChangeThemeAsync();
+
 				myTimer.Start();
-				return;
 			}
 		}
 		private void RestartApplication()
@@ -138,7 +139,8 @@ namespace ProcessTimeCheckerWPF
 		private async void ChangeLanguage_Click(object sender, RoutedEventArgs e)
 		{
 			myTimer.Stop();
-			string msg = currentLanguage == "Turkish" ? "Uygulama Dilini İngilizceye Çevirmek İstediğinizden Emin Misiniz?" : "Are You Sure to Change the Application Language to Turkish?";
+			string msg = currentLanguage == "Turkish" ? "Uygulama dilini İngilizce'ye çevirmek istediğinizden emin misiniz?" : "Are you sure you want to change the application language to Turkish?";
+
 			string title = currentLanguage == "Turkish" ? "Dili Değiştir" : "Change Language";
 			MessageBoxResult dialog = MessageBox.Show(msg,
 									  title,

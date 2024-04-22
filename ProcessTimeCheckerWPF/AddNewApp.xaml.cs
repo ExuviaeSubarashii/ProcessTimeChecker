@@ -91,10 +91,11 @@ namespace ProcessTimeCheckerWPF
 		{
 			if (e.Key == System.Windows.Input.Key.Delete && !string.IsNullOrEmpty(selectedTask) && !string.IsNullOrWhiteSpace(selectedTask))
 			{
-				string msg = currentLanguage == "Turkish" ? $"{selectedTask} Uygulamasını İzleme Listesinden Çıkarmak İstediğinize Emin Misiniz? Sonradan Tekrar Ekleyebilirsiniz."
-									  : $"Are You Sure You Want Remove Task {selectedTask}? You Will be Able to Add It Again If You Change Your Mind.";
+				string msg = currentLanguage == "Turkish" ? $"{selectedTask} uygulamasını izleme listesinden çıkarmak istediğinize emin misiniz? Sonradan tekrar ekleyebilirsiniz."
+										   : $"Are you sure you want to remove task {selectedTask}? You will be able to add it again if you change your mind.";
 
 				string title = currentLanguage == "Turkish" ? "Uygulama Kaldırma" : "Remove Application";
+
 
 				MessageBoxResult dialog = MessageBox.Show(msg,
 										  title,
