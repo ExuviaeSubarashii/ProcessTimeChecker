@@ -34,7 +34,7 @@ namespace ProcessTimeCheckerWPF
 			}
 			else
 			{
-				string msg = currentLanguage == "Turkish" ? $"Yenileme hızını {sliderValue}'a değiştirmek istiyor musunuz? Bu, uygulamayı yeniden başlatacaktır."
+				string msg = currentLanguage == "Turkish" ? $"Yenileme hızını {sliderValue} yapmak istiyor musunuz? Bu, uygulamayı yeniden başlatacaktır."
 										   : $"Would you like to update the refresh timer to {sliderValue}? This will restart the app.";
 
 				string title = currentLanguage == "Turkish" ? "Yenileme Hızını Güncelle" : "Update Refresh Timer";
