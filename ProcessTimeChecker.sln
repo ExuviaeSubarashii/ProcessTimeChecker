@@ -3,19 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessTimeChecker", "ProcessTimeChecker\ProcessTimeChecker.csproj", "{1EF298EC-FB5F-4B71-B198-41A3FCC8ABC8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{6540817E-DD7A-4CE9-BD06-1C24EA487C89}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTC.Domain", "Domain\PTC.Domain.csproj", "{58A412B4-95E6-4C3E-99AD-182E22BD19FB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessConsole", "ProcessConsole\ProcessConsole.csproj", "{D83DD439-5F8A-4A6F-8384-662BB04807C5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTC.Services", "PTC.Services\PTC.Services.csproj", "{93BB22FA-8E95-489E-B634-4DB9B2C99FAA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTC.Resources", "PTC.Resources\PTC.Resources.csproj", "{3A3499F3-A48C-4627-8E26-8609EFDD955B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessTimeCheckerWPF", "ProcessTimeCheckerWPF\ProcessTimeCheckerWPF.csproj", "{844B5257-2142-41E2-92E2-2DB7C3FCDAAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessTimeCheckerWPF", "ProcessTimeCheckerWPF\ProcessTimeCheckerWPF.csproj", "{844B5257-2142-41E2-92E2-2DB7C3FCDAAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,18 +19,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1EF298EC-FB5F-4B71-B198-41A3FCC8ABC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EF298EC-FB5F-4B71-B198-41A3FCC8ABC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EF298EC-FB5F-4B71-B198-41A3FCC8ABC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EF298EC-FB5F-4B71-B198-41A3FCC8ABC8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{58A412B4-95E6-4C3E-99AD-182E22BD19FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{58A412B4-95E6-4C3E-99AD-182E22BD19FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58A412B4-95E6-4C3E-99AD-182E22BD19FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58A412B4-95E6-4C3E-99AD-182E22BD19FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D83DD439-5F8A-4A6F-8384-662BB04807C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D83DD439-5F8A-4A6F-8384-662BB04807C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D83DD439-5F8A-4A6F-8384-662BB04807C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D83DD439-5F8A-4A6F-8384-662BB04807C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{93BB22FA-8E95-489E-B634-4DB9B2C99FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93BB22FA-8E95-489E-B634-4DB9B2C99FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93BB22FA-8E95-489E-B634-4DB9B2C99FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
