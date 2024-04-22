@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProcessTimeCheckerWPF"
         mc:Ignorable="d"
-        Title="AddNewApp" Height="400" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/PTC.png">
+        Title="Add New App" Height="400" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/PTC.png">
     <Grid Background="#E5E5E5">
 
         <Button Name="ClearFile" Margin="8,50,0,0" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#4CAF50" Foreground="White" Height="30" Width="165" Click="ClearFile_Click">
