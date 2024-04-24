@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProcessTimeCheckerWPF"
         mc:Ignorable="d"
-        Title="Add New App" Height="400" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/PTC.png">
-    <Grid Background="#E5E5E5">
-
-        <Button Name="ClearFile" Margin="8,50,0,0" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#4CAF50" Foreground="White" Height="30" Width="165" Click="ClearFile_Click">
+        Title="Add New App" Height="400" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/PTC.png" FontFamily="Segoe UI" FontWeight="Bold">
+    <Window.Resources>
+        <Style x:Key="ClearFile" TargetType="Button">
+            <Setter Property="Background" Value="#750E21"/>
+            <Setter Property="Foreground" Value="LightBlue"/>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#191919">
+        <Button Name="ClearFile" Margin="8,50,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Width="165" Click="ClearFile_Click" Style="{StaticResource ClearFile}">
             <TextBlock Name="ClearFileText" TextWrapping="Wrap" TextAlignment="Center"/>
         </Button>
         <TextBox Name="NewTaskNameBox" Margin="10,100,627,0" Background="#BDBDBD" Foreground="White" VerticalAlignment="Top" Height="50" Width="165"/>

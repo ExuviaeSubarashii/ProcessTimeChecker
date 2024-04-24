@@ -4,6 +4,7 @@ using PTC.Services.Services;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -20,7 +21,7 @@ namespace ProcessTimeCheckerWPF
 		private readonly ProcessServices _PS = new();
 		private readonly SettingsService _SS = new();
 		private static string currentLanguage = null!;
-
+		private static string currentTheme = null!;
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -106,11 +107,13 @@ namespace ProcessTimeCheckerWPF
 		}
 		private async Task SetCurrentTheme()
 		{
-			string currentTheme = await _SS.WhatThemeIsIt();
+			currentTheme = await _SS.WhatThemeIsIt();
+			Color color = (Color)ColorConverter.ConvertFromString("#191C20");
+
 			if (!taskDataGrid.Resources.Contains(typeof(DataGrid)))
 			{
 				Style dataGridStyle = new Style(typeof(DataGrid));
-				dataGridStyle.Setters.Add(new Setter(DataGrid.BackgroundProperty, currentTheme == "Dark" ? Brushes.Black : Brushes.White));
+				dataGridStyle.Setters.Add(new Setter(DataGrid.BackgroundProperty, currentTheme == "Dark" ? new SolidColorBrush(color) : Brushes.White));
 				taskDataGrid.Resources.Add(typeof(DataGrid), dataGridStyle);
 			}
 
@@ -124,8 +127,23 @@ namespace ProcessTimeCheckerWPF
 			if (!taskDataGrid.Resources.Contains(typeof(DataGridCell)))
 			{
 				Style dataGridCellStyle = new Style(typeof(DataGridCell));
-				dataGridCellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, currentTheme == "Dark" ? Brushes.LightGray : Brushes.Black));
+				dataGridCellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, currentTheme == "Dark" ? Brushes.Chartreuse : Brushes.Black));
 				taskDataGrid.Resources.Add(typeof(DataGridCell), dataGridCellStyle);
+			}
+			if (!taskDataGrid.Resources.Contains(typeof(DataGridColumnHeader)))
+			{
+				Style columnHeaderStyle = new Style(typeof(DataGridColumnHeader));
+				columnHeaderStyle.Setters.Add(new Setter(BackgroundProperty, currentTheme == "Dark" ? new SolidColorBrush(color) : Brushes.Gray));
+				columnHeaderStyle.Setters.Add(new Setter(ForegroundProperty, currentTheme == "Dark" ? Brushes.AliceBlue : Brushes.White));
+				columnHeaderStyle.Setters.Add(new Setter(FontSizeProperty, 14.0));
+				columnHeaderStyle.Setters.Add(new Setter(FontWeightProperty, FontWeights.Bold));
+				columnHeaderStyle.Setters.Add(new Setter(BorderBrushProperty, Brushes.LightGray));
+				columnHeaderStyle.Setters.Add(new Setter(BorderThicknessProperty, new Thickness(0, 0, 0, 2)));
+				columnHeaderStyle.Setters.Add(new Setter(PaddingProperty, new Thickness(10)));
+				columnHeaderStyle.Setters.Add(new Setter(HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
+				columnHeaderStyle.Setters.Add(new Setter(HorizontalContentAlignmentProperty, HorizontalAlignment.Center));
+				columnHeaderStyle.Setters.Add(new Setter(VerticalContentAlignmentProperty, VerticalAlignment.Center));
+				taskDataGrid.ColumnHeaderStyle = columnHeaderStyle;
 			}
 		}
 

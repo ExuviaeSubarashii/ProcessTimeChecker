@@ -5,9 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Process Time Checker" Height="400" Width="800" Loaded="Window_Loaded" Icon="/PTC.png" WindowStartupLocation="CenterScreen">
-    <Window.Resources
-        />
+    <Window.Resources>
+        <!-- Style for Menu -->
+        <Style TargetType="Menu">
+            <Setter Property="Background" Value="#222831"/>
+            <Setter Property="Foreground" Value="#E8C872"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+
+        <Style TargetType="MenuItem">
+            <Setter Property="Background" Value="#240A34"/>
+            <Setter Property="Foreground" Value="#E8C872"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="#E8C872"/>
+        </Style>
+    </Window.Resources>
     <Grid>
+
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -38,14 +53,31 @@
         </Menu>
 
         <Grid Grid.Row="1">
-            <DataGrid Name="taskDataGrid"
+            <DataGrid  Name="taskDataGrid"
               ItemsSource="{Binding Tasks}"
-              Margin="0"
+              ColumnWidth="*"
               VerticalAlignment="Stretch"
               HorizontalAlignment="Stretch"
-                      FontFamily="Arial"
-                      />
-            
+              FontSize="14"         
+              FontFamily="Segoe UI"
+              HeadersVisibility="Column"
+              CanUserSortColumns="False"
+              CanUserResizeColumns="False"
+              CanUserResizeRows="False"
+              BorderBrush="#CCCCCC"
+              BorderThickness="1"
+              RowHeaderWidth="2"
+              RowHeaderStyle="{x:Null}"
+              AutoGenerateColumns="True"
+              RowBackground="Transparent"
+              RowHeight="30"
+              SelectionMode="Single"
+              CanUserAddRows="False"
+              CanUserDeleteRows="False"
+              Foreground="#333333"
+              VerticalGridLinesBrush="#888888"
+              HorizontalGridLinesBrush="#888888"/>
         </Grid>
+
     </Grid>
 </Window>
