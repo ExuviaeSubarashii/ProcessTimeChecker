@@ -34,7 +34,7 @@ namespace PTC.Services.Services
 								TaskName = localbyname.ProcessName,
 								TaskOpening = localbyname.StartTime,
 								TaskHour = FormatTimeSpan(localbyname.StartTime),
-								TaskDate = DateTime.Now
+								TaskCurrentTime = DateTime.Now
 							};
 							tasks.Add(dto);
 						}

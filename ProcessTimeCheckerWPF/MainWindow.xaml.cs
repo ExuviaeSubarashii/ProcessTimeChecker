@@ -29,7 +29,6 @@ namespace ProcessTimeCheckerWPF
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			currentLanguage = await _SS.GetLanguage();
-
 			await UpdateTopMost();
 			await SetCurrentTheme();
 			await SetLanguageSettings();
@@ -41,7 +40,7 @@ namespace ProcessTimeCheckerWPF
 		private async void TimerEventProcessor(object? sender, EventArgs e)
 		{
 			taskDataGrid.ItemsSource = new List<TasksDto>();
-			tasksDtos = (List<TasksDto>)await _PS.GetTheProcesses();
+			tasksDtos = await _PS.GetTheProcesses();
 			taskDataGrid.ItemsSource = tasksDtos;
 		}
 		private async Task UpdateTopMost()

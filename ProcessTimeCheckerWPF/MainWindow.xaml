@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Process Time Checker" Height="400" Width="800" Loaded="Window_Loaded" Icon="/PTC.png" WindowStartupLocation="CenterScreen">
+    <Window.Resources
+        />
     <Grid>
 
         <Grid.RowDefinitions>
@@ -40,8 +42,10 @@
               ItemsSource="{Binding Tasks}"
               Margin="0"
               VerticalAlignment="Stretch"
-              HorizontalAlignment="Stretch"/>
-
+              HorizontalAlignment="Stretch"
+                      FontFamily="Arial"
+                      />
+            
         </Grid>
     </Grid>
 </Window>
