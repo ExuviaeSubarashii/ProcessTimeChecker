@@ -48,7 +48,7 @@ namespace ProcessTimeCheckerWPF
 				{
 
 					await _SS.SetRefreshTime(sliderValue);
-					Process.Start(GlobalVariables.filePath);
+					Process.Start(GlobalVariables.currentExecutablePath);
 					Application.Current.Shutdown();
 				}
 				else

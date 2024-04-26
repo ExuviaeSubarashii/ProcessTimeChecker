@@ -1,17 +1,15 @@
-﻿using System.Text;
+﻿using PTC.Domain.GlobalClasses;
+using System.Text;
 
 namespace PTC.Services.Services
 {
 	public static class FileService
 	{
-		private readonly static string desktopDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-		private readonly static string relativePath = @"ProcessTimeChecker\PTC.Resources\TaskNames.txt";
-		private readonly static string filePath = Path.Combine(desktopDirectory, relativePath);
 		public static async Task<bool> CheckIfFileExists()
 		{
-			if (await Task.Run(() => !File.Exists(filePath)))
+			if (await Task.Run(() => !File.Exists(GlobalVariables._txtFilePath)))
 			{
-				StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8);
+				StreamWriter sw = new StreamWriter(GlobalVariables._txtFilePath, false, Encoding.UTF8);
 				sw.Close();
 				return false;
 			}
@@ -21,7 +19,7 @@ namespace PTC.Services.Services
 		{
 			if (await FileService.CheckIfFileExists())
 			{
-				await File.WriteAllTextAsync(filePath, string.Empty);
+				await File.WriteAllTextAsync(GlobalVariables._txtFilePath, string.Empty);
 			}
 		}
 	}

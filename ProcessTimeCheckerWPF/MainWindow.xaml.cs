@@ -102,7 +102,7 @@ namespace ProcessTimeCheckerWPF
 		}
 		private void RestartApplication()
 		{
-			Process.Start(GlobalVariables.filePath);
+			Process.Start(GlobalVariables.currentExecutablePath);
 			Application.Current.Shutdown();
 		}
 		private async Task SetCurrentTheme()
