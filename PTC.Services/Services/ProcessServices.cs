@@ -13,7 +13,7 @@ namespace PTC.Services.Services
 		{
 			List<TasksDto> tasks = new();
 
-			if (await FileService.CheckIfFileExists())
+			if (await FileService.CheckIfFileExistsAndCreate())
 			{
 
 				string processName = await File.ReadAllTextAsync(GlobalVariables._txtFilePath);

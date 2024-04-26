@@ -5,7 +5,7 @@ namespace PTC.Services.Services
 {
 	public static class FileService
 	{
-		public static async Task<bool> CheckIfFileExists()
+		public static async Task<bool> CheckIfFileExistsAndCreate()
 		{
 			if (await Task.Run(() => !File.Exists(GlobalVariables._txtFilePath)))
 			{
@@ -17,7 +17,7 @@ namespace PTC.Services.Services
 		}
 		public static async Task ClearFileContentAsync()
 		{
-			if (await FileService.CheckIfFileExists())
+			if (await FileService.CheckIfFileExistsAndCreate())
 			{
 				await File.WriteAllTextAsync(GlobalVariables._txtFilePath, string.Empty);
 			}

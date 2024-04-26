@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\PTC.Domain.csproj" />
-    <ProjectReference Include="..\PTC.Resources\PTC.Resources.csproj" />
     <ProjectReference Include="..\PTC.Services\PTC.Services.csproj" />
   </ItemGroup>
 

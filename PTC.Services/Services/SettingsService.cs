@@ -1,13 +1,11 @@
-﻿using PTC.Domain.Interfaces;
+﻿using PTC.Domain.GlobalClasses;
+using PTC.Domain.Interfaces;
 using System.Text.Json;
 
 namespace PTC.Services.Services
 {
 	public class SettingsService : IAppSettings
 	{
-		private readonly static string desktopDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-		private readonly static string relativePath = @"ProcessTimeChecker\PTC.Resources\settings.json";
-		private readonly static string filePath = Path.Combine(desktopDirectory, relativePath);
 		public class Settings
 		{
 			public bool TopMost { get; set; }
@@ -17,9 +15,24 @@ namespace PTC.Services.Services
 		}
 		private async Task<Settings> ReadAllDataAsync()
 		{
-			string jsonString = await File.ReadAllTextAsync(filePath);
-			var data = JsonSerializer.Deserialize<Settings>(jsonString);
-			return data;
+			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
+			{
+				string jsonString = await File.ReadAllTextAsync(GlobalVariables._settingsFilePath);
+				var data = JsonSerializer.Deserialize<Settings>(jsonString);
+				return data;
+			}
+			else
+			{
+				Settings settings = new()
+				{
+					CurrentTheme = "Light",
+					RefreshTime = 2,
+					Language = "Turkish",
+					TopMost = false
+				};
+				return settings;
+			}
+
 		}
 		public async Task<bool> IsTopMostAsync()
 		{
@@ -38,13 +51,13 @@ namespace PTC.Services.Services
 				var jsonObject = await ReadAllDataAsync();
 				jsonObject.TopMost = !jsonObject.TopMost;
 				string updatedJson = JsonSerializer.Serialize(jsonObject);
-				await File.WriteAllTextAsync(filePath, updatedJson);
+				await File.WriteAllTextAsync(GlobalVariables._settingsFilePath, updatedJson);
 			}
 
 		}
 		public async Task<bool> CreateSettingsFileIfDoesntExistsAsync()
 		{
-			if (!File.Exists(filePath))
+			if (!File.Exists(GlobalVariables._settingsFilePath))
 			{
 				var settings = new Settings
 				{
@@ -54,7 +67,7 @@ namespace PTC.Services.Services
 					Language = "Turkish"
 				};
 				string jsonString = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
-				await File.WriteAllTextAsync(filePath, jsonString);
+				await File.WriteAllTextAsync(GlobalVariables._settingsFilePath, jsonString);
 				return true;
 			}
 			return false;
@@ -73,7 +86,7 @@ namespace PTC.Services.Services
 					jsonObject.CurrentTheme = "Dark";
 				}
 				string updatedJson = JsonSerializer.Serialize(jsonObject);
-				await File.WriteAllTextAsync(filePath, updatedJson);
+				await File.WriteAllTextAsync(GlobalVariables._settingsFilePath, updatedJson);
 			}
 		}
 		public async Task<string> WhatThemeIsIt()
@@ -104,7 +117,7 @@ namespace PTC.Services.Services
 				var data = await ReadAllDataAsync();
 				data.RefreshTime = refreshTime;
 				string updatedJson = JsonSerializer.Serialize(data);
-				await File.WriteAllTextAsync(filePath, updatedJson);
+				await File.WriteAllTextAsync(GlobalVariables._settingsFilePath, updatedJson);
 			}
 		}
 		public async Task SetLanguage()
@@ -115,7 +128,7 @@ namespace PTC.Services.Services
 				string currentLang = data.Language == "Turkish" ? "English" : "Turkish";
 				data.Language = currentLang;
 				string updatedJson = JsonSerializer.Serialize(data);
-				await File.WriteAllTextAsync(filePath, updatedJson);
+				await File.WriteAllTextAsync(GlobalVariables._settingsFilePath, updatedJson);
 			}
 		}
 		public async Task<string> GetLanguage()
