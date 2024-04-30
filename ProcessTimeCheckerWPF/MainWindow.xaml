@@ -54,7 +54,7 @@
 
         <Grid Grid.Row="1">
             <DataGrid  Name="taskDataGrid"
-              ItemsSource="{Binding Tasks}"
+              ItemsSource="{Binding tasksDtos}"
               ColumnWidth="*"
               VerticalAlignment="Stretch"
               HorizontalAlignment="Stretch"
@@ -76,7 +76,8 @@
               CanUserDeleteRows="False"
               Foreground="#333333"
               VerticalGridLinesBrush="#888888"
-              HorizontalGridLinesBrush="#888888"/>
+              HorizontalGridLinesBrush="#888888">
+            </DataGrid>
         </Grid>
 
     </Grid>

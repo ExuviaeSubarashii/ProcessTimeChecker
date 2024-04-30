@@ -26,7 +26,6 @@ namespace ProcessTimeCheckerWPF
 		{
 			InitializeComponent();
 		}
-
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			currentLanguage = await _SS.GetLanguage();
@@ -49,13 +48,11 @@ namespace ProcessTimeCheckerWPF
 			bool isTopMost = await Task.Run(() => _SS.IsTopMostAsync());
 			this.Topmost = isTopMost;
 		}
-
 		private async void StayOnTop_Click(object sender, RoutedEventArgs e)
 		{
 			await _SS.ChangeTopMostPropertyAsync();
 			await UpdateTopMost();
 		}
-
 		private void AddNewApp_Click(object sender, RoutedEventArgs e)
 		{
 			AddNewApp newApp = new AddNewApp();
@@ -100,6 +97,18 @@ namespace ProcessTimeCheckerWPF
 				myTimer.Start();
 			}
 		}
+		//private async Task SetDataGridHeadersAsync()
+		//{
+		//	if (taskDataGrid.Columns.Count > 0)
+		//	{
+		//		await Application.Current.Dispatcher.InvokeAsync(new Action(() =>
+		//		{
+		//			taskDataGrid.Columns[0].Header = currentLanguage == "Turkish" ? "Uygulama Adı" : "Task Name";
+		//			taskDataGrid.Columns[1].Header = currentLanguage == "Turkish" ? "Çalışma Saati" : "Up Time";
+		//			taskDataGrid.Columns[2].Header = currentLanguage == "Turkish" ? "Açılış Saat ve Tarihi" : "Start Date & Time";
+		//		}));
+		//	}
+		//}
 		private void RestartApplication()
 		{
 			Process.Start(GlobalVariables.currentExecutablePath);
@@ -146,13 +155,11 @@ namespace ProcessTimeCheckerWPF
 				taskDataGrid.ColumnHeaderStyle = columnHeaderStyle;
 			}
 		}
-
 		private void ChangeRefreshTimer_Click(object sender, RoutedEventArgs e)
 		{
 			ChooseTimer chooseTimer = new ChooseTimer();
 			chooseTimer.ShowDialog();
 		}
-
 		private async void ChangeLanguage_Click(object sender, RoutedEventArgs e)
 		{
 			myTimer.Stop();
