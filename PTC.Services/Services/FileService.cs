@@ -17,7 +17,7 @@ namespace PTC.Services.Services
 		}
 		public static async Task ClearFileContentAsync()
 		{
-			if (await FileService.CheckIfFileExistsAndCreate())
+			if (await CheckIfFileExistsAndCreate())
 			{
 				await File.WriteAllTextAsync(GlobalVariables._txtFilePath, string.Empty);
 			}
