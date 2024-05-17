@@ -121,6 +121,10 @@ namespace ProcessTimeCheckerWPF
 			ClearFileText.Text = currentLanguage == "Turkish" ? "Dosyayı Temizle" : "Clear File";
 			AddNewAppText.Text = currentLanguage == "Turkish" ? "Yeni Uygulama Ekle" : "Add New App";
 			InformationLabel.Content = currentLanguage == "Turkish" ? "Silmek İçin Uygulamaya tıkla ve DEL tuşuna bas" : "Click on the app and hit DEL button to Delete";
+			howToAddText.Content = currentLanguage == "Turkish" ?
+				"Yeni bir uygulama eklemek için CTRL+SHIFT+ESC tuşlarına basın veya Görev Yöneticisini açın. Ardından eklemek istediğiniz uygulamanın işlem adını .exe olmadan girin."
+				:
+				"To add a new application press CTRL+SHIFT+ESC keys or open Task Manager. Then write the process name of the application you want to add without the .exe part.";
 		}
 	}
 }

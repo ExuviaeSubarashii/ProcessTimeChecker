@@ -22,6 +22,23 @@
         </Button>
         <Label Name="InformationLabel" Margin="13,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#757575"></Label>
         <ListView Name="listView" SelectionChanged="listView_SelectionChanged" Margin="212,42,22,42" Background="#FFFFFF" BorderBrush="#757575" Height="300" PreviewKeyDown="listView_PreviewKeyDown"/>
+        <Border BorderThickness="4" CornerRadius="8">
+            <Button Name="HowToAddApps" Margin="40,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20" Background="Blue" Foreground="White" Content="?" >
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <Label Name="howToAddText"></Label>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+        </Border>
+
     </Grid>
 
 </Window>
