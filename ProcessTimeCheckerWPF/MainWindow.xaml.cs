@@ -39,7 +39,10 @@ namespace ProcessTimeCheckerWPF
 		}
 		private async void TimerEventProcessor(object? sender, EventArgs e)
 		{
-			taskDataGrid.ItemsSource = new List<TasksDto>();
+			await SetDataGridData();
+		}
+		private async Task SetDataGridData()
+		{
 			tasksDtos = await _PS.GetTheProcesses();
 			taskDataGrid.ItemsSource = tasksDtos;
 		}

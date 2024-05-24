@@ -6,10 +6,15 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>PTC.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="PTC.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="PTC.ico" />
   </ItemGroup>
 
   <ItemGroup>
