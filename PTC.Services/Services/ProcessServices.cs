@@ -30,7 +30,7 @@ namespace PTC.Services.Services
 						{
 							TasksDto dto = new TasksDto
 							{
-								TaskName = localbyname.ProcessName,
+								TaskName = $"{localbyname.ProcessName} || ({localbyname.MainWindowTitle})",
 								TaskOpening = localbyname.StartTime,
 								TaskHour = FormatTimeSpan(localbyname.StartTime),
 							};
