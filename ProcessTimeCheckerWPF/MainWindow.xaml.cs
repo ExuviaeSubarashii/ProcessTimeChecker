@@ -32,6 +32,7 @@ namespace ProcessTimeCheckerWPF
 			await UpdateTopMost();
 			await SetCurrentTheme();
 			await SetLanguageSettings();
+			await SetDataGridHeadersAsync();
 			int refreshTime = await _SS.GetRefreshTime();
 			myTimer.Tick += new EventHandler(TimerEventProcessor);
 			myTimer.Interval = TimeSpan.FromSeconds(refreshTime);
@@ -44,6 +45,7 @@ namespace ProcessTimeCheckerWPF
 		private async Task SetDataGridData()
 		{
 			tasksDtos = await _PS.GetTheProcesses();
+
 			taskDataGrid.ItemsSource = tasksDtos;
 		}
 		private async Task UpdateTopMost()
@@ -100,18 +102,18 @@ namespace ProcessTimeCheckerWPF
 				myTimer.Start();
 			}
 		}
-		//private async Task SetDataGridHeadersAsync()
-		//{
-		//	if (taskDataGrid.Columns.Count > 0)
-		//	{
-		//		await Application.Current.Dispatcher.InvokeAsync(new Action(() =>
-		//		{
-		//			taskDataGrid.Columns[0].Header = currentLanguage == "Turkish" ? "Uygulama Adı" : "Task Name";
-		//			taskDataGrid.Columns[1].Header = currentLanguage == "Turkish" ? "Çalışma Saati" : "Up Time";
-		//			taskDataGrid.Columns[2].Header = currentLanguage == "Turkish" ? "Açılış Saat ve Tarihi" : "Start Date & Time";
-		//		}));
-		//	}
-		//}
+		private async Task SetDataGridHeadersAsync()
+		{
+			if (taskDataGrid.Columns.Count > 0)
+			{
+				await Application.Current.Dispatcher.InvokeAsync(new Action(() =>
+				{
+					dataGridColumnTaskName.Header = currentLanguage == "Turkish" ? "Uygulama Adı" : "Task Name";
+					dataGridColumnTaskHour.Header = currentLanguage == "Turkish" ? "Çalışma Saati" : "Up Time";
+					dataGridColumnTaskOpening.Header = currentLanguage == "Turkish" ? "Açılış Saat ve Tarihi" : "Start Date & Time";
+				}));
+			}
+		}
 		private void RestartApplication()
 		{
 			Process.Start(GlobalVariables.currentExecutablePath);
