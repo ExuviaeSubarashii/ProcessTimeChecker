@@ -6,14 +6,8 @@ namespace PTC.Services.Services
 {
 	public class SettingsService : IAppSettings
 	{
-		public class Settings
-		{
-			public bool TopMost { get; set; }
-			public string CurrentTheme { get; set; } = null!;
-			public int RefreshTime { get; set; }
-			public string Language { get; set; } = null!;
-		}
-		private async Task<Settings> ReadAllDataAsync()
+
+		public async Task<Settings> ReadAllDataAsync()
 		{
 			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
 			{
@@ -136,5 +130,7 @@ namespace PTC.Services.Services
 			var data = await ReadAllDataAsync();
 			return data.Language;
 		}
+
 	}
+
 }

@@ -87,19 +87,16 @@ namespace PTC.Services.Services
 		}
 		public async Task<List<string>> GetCurrentlyAddedTasks()
 		{
-			string processName = await File.ReadAllTextAsync(GlobalVariables._txtFilePath);
-			List<string> processNames = processName.Split(',').ToList();
-
-			if (processNames.Any())
+			if (await CreateTaskNamesFileIfDoesntExist())
 			{
-				return processNames;
-			}
-			else
-			{
-				return new List<string>();
+				var processName = await File.ReadAllTextAsync(GlobalVariables._txtFilePath);
+				var processNames = processName.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+				return processNames.Any() ? processNames : new List<string>();
 			}
 
+			return new List<string>();
 		}
+
 		public async Task DeleteTask(string taskName)
 		{
 			string processName = File.ReadAllText(GlobalVariables._txtFilePath);
@@ -115,6 +112,16 @@ namespace PTC.Services.Services
 
 				}
 			}
+		}
+
+		public async Task<bool> CreateTaskNamesFileIfDoesntExist()
+		{
+			if (!File.Exists(GlobalVariables._txtFilePath))
+			{
+				await Task.Run(() => File.Create(GlobalVariables._txtFilePath).Close());
+				return true;
+			}
+			return false;
 		}
 	}
 }

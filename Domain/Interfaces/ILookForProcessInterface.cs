@@ -8,5 +8,6 @@ namespace PTC.Domain.Interfaces
 		Task SaveTaskInformation(string taskName);
 		Task<List<string>> GetCurrentlyAddedTasks();
 		Task DeleteTask(string taskName);
+		Task<bool> CreateTaskNamesFileIfDoesntExist();
 	}
 }
