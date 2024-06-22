@@ -157,6 +157,7 @@ namespace ProcessTimeCheckerWPF
 				columnHeaderStyle.Setters.Add(new Setter(HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
 				columnHeaderStyle.Setters.Add(new Setter(HorizontalContentAlignmentProperty, HorizontalAlignment.Center));
 				columnHeaderStyle.Setters.Add(new Setter(VerticalContentAlignmentProperty, VerticalAlignment.Center));
+
 				taskDataGrid.ColumnHeaderStyle = columnHeaderStyle;
 			}
 		}
