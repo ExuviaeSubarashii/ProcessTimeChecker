@@ -18,7 +18,6 @@ namespace ProcessTimeCheckerWPF
 		{
 			InitializeComponent();
 		}
-
 		private async Task GetCurrentTasks()
 		{
 			List<string> tasks = await _PS.GetCurrentlyAddedTasks();
@@ -56,7 +55,6 @@ namespace ProcessTimeCheckerWPF
 			SetLanguage();
 			await GetCurrentTasks();
 		}
-
 		private void listView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{
 			if (listView.SelectedItems.Count > 0)
@@ -65,12 +63,10 @@ namespace ProcessTimeCheckerWPF
 				selectedTask = item;
 			}
 		}
-
 		private async void ClearFile_Click(object sender, RoutedEventArgs e)
 		{
 			await FileService.ClearFileContentAsync();
 		}
-
 		private async void AddNewAppButton_Click(object sender, RoutedEventArgs e)
 		{
 			string taskName = NewTaskNameBox.Text;
@@ -86,7 +82,6 @@ namespace ProcessTimeCheckerWPF
 			ClearTextBox();
 			await Task.Run(() => GetCurrentTasks());
 		}
-
 		private async void listView_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
 		{
 			if (e.Key == System.Windows.Input.Key.Delete && !string.IsNullOrEmpty(selectedTask) && !string.IsNullOrWhiteSpace(selectedTask))
