@@ -15,13 +15,13 @@ namespace ProcessTimeCheckerWPF
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private DispatcherTimer myTimer = new DispatcherTimer();
+		private readonly DispatcherTimer myTimer = new DispatcherTimer();
 
-		public List<TasksDto> tasksDtos = new();
+		private List<TasksDto> tasksDtos = new();
 		private readonly ProcessServices _PS = new();
 		private readonly SettingsService _SS = new();
-		private static string currentLanguage = null!;
-		private static string currentTheme = null!;
+		private string currentLanguage = null!;
+		private string currentTheme = null!;
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -187,7 +187,6 @@ namespace ProcessTimeCheckerWPF
 			else
 			{
 				myTimer.Start();
-				return;
 			}
 		}
 	}

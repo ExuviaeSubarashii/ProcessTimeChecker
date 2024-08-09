@@ -30,7 +30,7 @@ namespace PTC.Services.Services
 		}
 		public async Task<bool> IsTopMostAsync()
 		{
-			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
+			if (!await CreateSettingsFileIfDoesntExistsAsync())
 			{
 				var data = await ReadAllDataAsync();
 				bool isdata = data.TopMost;
@@ -40,7 +40,7 @@ namespace PTC.Services.Services
 		}
 		public async Task ChangeTopMostPropertyAsync()
 		{
-			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
+			if (!await CreateSettingsFileIfDoesntExistsAsync())
 			{
 				var jsonObject = await ReadAllDataAsync();
 				jsonObject.TopMost = !jsonObject.TopMost;
@@ -68,7 +68,7 @@ namespace PTC.Services.Services
 		}
 		public async Task ChangeThemeAsync()
 		{
-			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
+			if (!await CreateSettingsFileIfDoesntExistsAsync())
 			{
 				var jsonObject = await ReadAllDataAsync();
 				if (jsonObject.CurrentTheme == "Dark")
@@ -85,7 +85,7 @@ namespace PTC.Services.Services
 		}
 		public async Task<string> WhatThemeIsIt()
 		{
-			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
+			if (!await CreateSettingsFileIfDoesntExistsAsync())
 			{
 
 				var data = await ReadAllDataAsync();
@@ -96,7 +96,7 @@ namespace PTC.Services.Services
 		}
 		public async Task<int> GetRefreshTime()
 		{
-			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
+			if (!await CreateSettingsFileIfDoesntExistsAsync())
 			{
 
 				var data = await ReadAllDataAsync();
@@ -106,7 +106,7 @@ namespace PTC.Services.Services
 		}
 		public async Task SetRefreshTime(int refreshTime)
 		{
-			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
+			if (!await CreateSettingsFileIfDoesntExistsAsync())
 			{
 				var data = await ReadAllDataAsync();
 				data.RefreshTime = refreshTime;
@@ -116,7 +116,7 @@ namespace PTC.Services.Services
 		}
 		public async Task SetLanguage()
 		{
-			if (await CreateSettingsFileIfDoesntExistsAsync() == false)
+			if (!await CreateSettingsFileIfDoesntExistsAsync())
 			{
 				var data = await ReadAllDataAsync();
 				string currentLang = data.Language == "Turkish" ? "English" : "Turkish";

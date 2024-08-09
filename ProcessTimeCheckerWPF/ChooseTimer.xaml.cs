@@ -11,8 +11,8 @@ namespace ProcessTimeCheckerWPF
 	public partial class ChooseTimer : Window
 	{
 		private readonly SettingsService _SS = new();
-		private static int sliderValue;
-		private static string currentLanguage = null!;
+		private int sliderValue;
+		private string currentLanguage = null!;
 		public ChooseTimer()
 		{
 			InitializeComponent();

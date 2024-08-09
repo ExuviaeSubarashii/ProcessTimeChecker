@@ -55,7 +55,7 @@ namespace PTC.Services.Services
 		{
 			try
 			{
-				string processName = File.ReadAllText(GlobalVariables._txtFilePath);
+				string processName = await File.ReadAllTextAsync(GlobalVariables._txtFilePath);
 				List<string> processNames = processName.Split(',').ToList();
 				processNames.RemoveAll(x => x == "");
 				if (processNames.Count == 0)
@@ -64,7 +64,7 @@ namespace PTC.Services.Services
 					File.Create(GlobalVariables._txtFilePath).Close();
 					await using (StreamWriter outputFile = new(GlobalVariables._txtFilePath, true))
 					{
-						outputFile.Write(taskName);
+						await outputFile.WriteAsync(taskName);
 					}
 				}
 				else
@@ -73,7 +73,7 @@ namespace PTC.Services.Services
 					File.Create(GlobalVariables._txtFilePath).Close();
 					await using (StreamWriter outputFile = new(GlobalVariables._txtFilePath, true))
 					{
-						outputFile.Write(string.Join(",", processNames));
+						await outputFile.WriteAsync(string.Join(",", processNames));
 					}
 				}
 
@@ -85,7 +85,7 @@ namespace PTC.Services.Services
 		}
 		public async Task<List<string>> GetCurrentlyAddedTasks()
 		{
-			if (await CreateTaskNamesFileIfDoesntExist() == false)
+			if (!await CreateTaskNamesFileIfDoesntExist())
 			{
 				var processName = await File.ReadAllTextAsync(GlobalVariables._txtFilePath);
 				var processNames = processName.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -98,7 +98,7 @@ namespace PTC.Services.Services
 		}
 		public async Task DeleteTask(string taskName)
 		{
-			string processName = File.ReadAllText(GlobalVariables._txtFilePath);
+			string processName = await File.ReadAllTextAsync(GlobalVariables._txtFilePath);
 			List<string> processNames = processName.Split(',').ToList();
 			bool doesExists = processNames.Any(x => x.Contains(taskName));
 			if (doesExists)
@@ -107,7 +107,7 @@ namespace PTC.Services.Services
 				File.Create(GlobalVariables._txtFilePath).Close();
 				await using (StreamWriter outputFile = new(GlobalVariables._txtFilePath, true))
 				{
-					outputFile.Write(string.Join(",", processNames));
+					await outputFile.WriteAsync(string.Join(",", processNames));
 
 				}
 			}
