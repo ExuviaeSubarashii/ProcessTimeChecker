@@ -5,55 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Process Time Checker" Height="400" Width="800" Loaded="Window_Loaded" Icon="/PTC.png" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <!-- Style for Menu -->
-        <Style TargetType="Menu">
-            <Setter Property="Background" Value="#222831"/>
-            <Setter Property="Foreground" Value="#E8C872"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-        </Style>
+   <Window.Resources>
+	 <!-- Style for Menu -->
+	 <Style TargetType="Menu">
+	    <Setter Property="Background" Value="#222831"/>
+	    <Setter Property="Foreground" Value="#E8C872"/>
+	    <Setter Property="FontFamily" Value="Segoe UI"/>
+	 </Style>
 
-        <Style TargetType="MenuItem">
-            <Setter Property="Background" Value="#240A34"/>
-            <Setter Property="Foreground" Value="#E8C872"/>
-        </Style>
-        <Style TargetType="Label">
-            <Setter Property="Foreground" Value="#E8C872"/>
-        </Style>
-    </Window.Resources>
-    <Grid>
+	 <Style TargetType="MenuItem">
+	    <Setter Property="Background" Value="#240A34"/>
+	    <Setter Property="Foreground" Value="#E8C872"/>
+	 </Style>
+	 <Style TargetType="Label">
+	    <Setter Property="Foreground" Value="#E8C872"/>
+	 </Style>
+   </Window.Resources>
+   <Grid>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+	 <Grid.RowDefinitions>
+	    <RowDefinition Height="Auto" />
+	    <RowDefinition Height="*" />
+	 </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
-            <MenuItem Name="SettingsTop">
-                <MenuItem Name="StayOnTop"
+	 <Menu Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
+	    <MenuItem Name="SettingsTop">
+		  <MenuItem Name="StayOnTop"
                           Click="StayOnTop_Click" />
-                <MenuItem
+		  <MenuItem
                     Name="ChangeTheme"
                     Click="ChangeTheme_Click"
                     />
-                <MenuItem
+		  <MenuItem
                     Name="ChangeRefreshTimer"
                     Click="ChangeRefreshTimer_Click"
                     />
-                <MenuItem
+		  <MenuItem
                     Name="ChangeLanguage"
                     Click="ChangeLanguage_Click"/>
-            </MenuItem>
-            <MenuItem Name="AddNewAppTop">
-                <MenuItem Name="AddNewApp"
+	    </MenuItem>
+	    <MenuItem Name="AddNewAppTop">
+		  <MenuItem Name="AddNewApp"
                           Click="AddNewApp_Click" />
-            </MenuItem>
-            <Label Name="refreshRateLabel"/>
-        </Menu>
+	    </MenuItem>
+	    <Label Name="refreshRateLabel"/>
+	 </Menu>
 
-        <Grid Grid.Row="1">
-            <DataGrid Name="taskDataGrid"
-          ItemsSource="{Binding tasksDtos}"
+	 <Grid Grid.Row="1">
+	    <DataGrid Name="taskDataGrid"
+          ItemsSource="{Binding TasksDtos}"
           ColumnWidth="*"
           VerticalAlignment="Stretch"
           HorizontalAlignment="Stretch"
@@ -76,14 +76,34 @@
           Foreground="#333333"
           VerticalGridLinesBrush="#888888"
           HorizontalGridLinesBrush="#888888">
-                <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="dataGridColumnTaskName" Binding="{Binding TaskName}" />
-                    <DataGridTextColumn x:Name="dataGridColumnTaskHour"  Binding="{Binding TaskHour}" />
-                    <DataGridTextColumn x:Name="dataGridColumnTaskOpening" Binding="{Binding TaskOpening}" />
-                </DataGrid.Columns>
-            </DataGrid>
+		  <DataGrid.Columns>
+			<DataGridTextColumn x:Name="dataGridColumnTaskName" Binding="{Binding TaskName}" Width="2*">
+			   <DataGridTextColumn.ElementStyle>
+				 <Style TargetType="TextBlock">
+				    <Setter Property="HorizontalAlignment" Value="Center" />
+				 </Style>
+			   </DataGridTextColumn.ElementStyle>
+			</DataGridTextColumn>
 
-        </Grid>
+			<DataGridTextColumn x:Name="dataGridColumnTaskHour" Binding="{Binding TaskHour}" Width="70">
+			   <DataGridTextColumn.ElementStyle>
+				 <Style TargetType="TextBlock">
+				    <Setter Property="HorizontalAlignment" Value="Center" />
+				 </Style>
+			   </DataGridTextColumn.ElementStyle>
+			   
+			</DataGridTextColumn>
+			<DataGridTextColumn x:Name="dataGridColumnTaskOpening" Binding="{Binding TaskOpening}" Width="1*">
+			   <DataGridTextColumn.ElementStyle>
+				 <Style TargetType="TextBlock">
+				    <Setter Property="HorizontalAlignment" Value="Center" />
+				 </Style>
+			   </DataGridTextColumn.ElementStyle>
+			</DataGridTextColumn>
+		  </DataGrid.Columns>
+	    </DataGrid>
 
-    </Grid>
+	 </Grid>
+
+   </Grid>
 </Window>
