@@ -23,11 +23,12 @@ namespace PTC.Services.Services
 			foreach (var item in processNames)
 			{
 			   Process? localbyname = Process.GetProcessesByName(item).FirstOrDefault();
-
 			   if (localbyname is { })
 			   {
+
 				 TasksDto dto = new TasksDto
 				 {
+				    ProcessName = localbyname.ProcessName,
 				    TaskName = $"{localbyname.ProcessName} || ({localbyname.MainWindowTitle})",
 				    TaskOpening = localbyname.StartTime,
 				    TaskHour = FormatTimeSpan(localbyname.StartTime),
@@ -60,16 +61,15 @@ namespace PTC.Services.Services
 		  processNames.RemoveAll(x => x == "");
 		  if (processNames.Count == 0)
 		  {
-			processNames.Add(taskName);
 			File.Create(GlobalVariables._txtFilePath).Close();
 			await using (StreamWriter outputFile = new(GlobalVariables._txtFilePath, true))
 			{
-			   await outputFile.WriteAsync(taskName);
+			   await outputFile.WriteAsync(taskName.ToLower());
 			}
 		  }
 		  else
 		  {
-			processNames.Add(taskName);
+			processNames.Add(taskName.ToLower());
 			File.Create(GlobalVariables._txtFilePath).Close();
 			await using (StreamWriter outputFile = new(GlobalVariables._txtFilePath, true))
 			{
@@ -100,15 +100,16 @@ namespace PTC.Services.Services
 	 {
 	    string processName = await File.ReadAllTextAsync(GlobalVariables._txtFilePath);
 	    List<string> processNames = processName.Split(',').ToList();
-	    bool doesExists = processNames.Any(x => x.Contains(taskName));
-	    if (doesExists)
+	    var match = processNames.Select(x => taskName.ToLower()).FirstOrDefault().ToLower();
+
+	    if (string.IsNullOrEmpty(match))
 	    {
-		  processNames.Remove(taskName);
+		  processNames.Remove(match);
 		  File.Create(GlobalVariables._txtFilePath).Close();
 		  await using (StreamWriter outputFile = new(GlobalVariables._txtFilePath, true))
 		  {
 			await outputFile.WriteAsync(string.Join(",", processNames));
-
+			return;
 		  }
 	    }
 	 }

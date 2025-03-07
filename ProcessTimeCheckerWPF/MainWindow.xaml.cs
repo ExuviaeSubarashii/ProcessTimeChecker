@@ -198,5 +198,34 @@ namespace ProcessTimeCheckerWPF
 		  RestartApplication();
 	    }
 	 }
+
+
+	 private async void RemoveTask_Click(object sender, RoutedEventArgs e)
+	 {
+	    if (taskDataGrid.SelectedItem is TasksDto selectedItem)
+	    {
+		  await _PS.DeleteTask(selectedItem.ProcessName.ToLower());
+
+		  await SetDataGridData();
+	    }
+	 }
+
+	 private async void GetTaskName_Click(object sender, RoutedEventArgs e)
+	 {
+	    await SetDataGridData();
+	 }
+
+	 private async void KillTask_Click(object sender, RoutedEventArgs e)
+	 {
+	    if (taskDataGrid.SelectedItem is TasksDto selectedItem)
+	    {
+		  var processes = Process.GetProcesses().Where(x => x.ProcessName == selectedItem.ProcessName);
+		  foreach (var item in processes)
+		  {
+			item.Kill();
+		  }
+		  await SetDataGridData();
+	    }
+	 }
    }
 }

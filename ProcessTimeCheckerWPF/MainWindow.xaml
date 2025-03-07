@@ -69,18 +69,29 @@
           RowHeaderStyle="{x:Null}"
           AutoGenerateColumns="False"
           RowBackground="Transparent"
-          RowHeight="30"
+          RowHeight="45"
           SelectionMode="Single"
           CanUserAddRows="False"
           CanUserDeleteRows="False"
           Foreground="#333333"
           VerticalGridLinesBrush="#888888"
           HorizontalGridLinesBrush="#888888">
+
+		  <DataGrid.ContextMenu>
+			<ContextMenu>
+			   <MenuItem Header="Remove Task"  x:Name="RemoveTask" Click="RemoveTask_Click"/>
+			   <MenuItem Header="" x:Name="GetTaskName" Click="GetTaskName_Click"/>
+			   <MenuItem Header="" x:Name="KillTask" Click="KillTask_Click"/>
+			</ContextMenu>
+		  </DataGrid.ContextMenu>
+
 		  <DataGrid.Columns>
 			<DataGridTextColumn x:Name="dataGridColumnTaskName" Binding="{Binding TaskName}" Width="2*">
 			   <DataGridTextColumn.ElementStyle>
 				 <Style TargetType="TextBlock">
-				    <Setter Property="HorizontalAlignment" Value="Center" />
+				    <Setter Property="VerticalAlignment" Value="Center"/>
+				    <Setter Property="TextWrapping" Value="Wrap"/>
+
 				 </Style>
 			   </DataGridTextColumn.ElementStyle>
 			</DataGridTextColumn>
@@ -91,7 +102,7 @@
 				    <Setter Property="HorizontalAlignment" Value="Center" />
 				 </Style>
 			   </DataGridTextColumn.ElementStyle>
-			   
+
 			</DataGridTextColumn>
 			<DataGridTextColumn x:Name="dataGridColumnTaskOpening" Binding="{Binding TaskOpening}" Width="1*">
 			   <DataGridTextColumn.ElementStyle>
