@@ -69,7 +69,7 @@ namespace ProcessTimeCheckerWPF
 	 }
 	 private async Task SetDataGridData()
 	 {
-	    TasksDtos = new ObservableCollection<TasksDto>(await _PS.GetTheProcesses());
+	    TasksDtos = new ObservableCollection<TasksDto>(await _PS.GetTheProcesses(CancellationToken.None));
 	 }
 	 private async Task UpdateTopMost()
 	 {
@@ -225,7 +225,7 @@ namespace ProcessTimeCheckerWPF
 	 {
 	    if (taskDataGrid.SelectedItem is TasksDto selectedItem && taskDataGrid.SelectedItems.Count < 1)
 	    {
-		  await _PS.DeleteTask(selectedItem.ProcessName.ToLower());
+		  await _PS.DeleteTask(selectedItem.ProcessName.ToLower(), CancellationToken.None);
 
 		  await SetDataGridData();
 	    }
@@ -243,12 +243,16 @@ namespace ProcessTimeCheckerWPF
 	 }
 	 private async void KillTask_Click(object sender, RoutedEventArgs e)
 	 {
-	    if (taskDataGrid.SelectedItem is TasksDto selectedItem)
+	    if (taskDataGrid.SelectedItems.Count > 1)
 	    {
-		  var processes = Process.GetProcesses().Where(x => x.ProcessName == selectedItem.ProcessName);
-		  foreach (var item in processes)
+		  List<TasksDto> selectedItem = taskDataGrid.SelectedItems.Cast<TasksDto>().ToList();
+		  foreach (var multipleTasks in selectedItem)
 		  {
-			item.Kill();
+			var processes = Process.GetProcesses().Where(x => x.ProcessName == multipleTasks.ProcessName);
+			foreach (var currTask in processes)
+			{
+			   currTask.Kill();
+			}
 		  }
 		  await SetDataGridData();
 	    }

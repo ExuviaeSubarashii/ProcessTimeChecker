@@ -20,7 +20,7 @@ namespace ProcessTimeCheckerWPF
 	 }
 	 private async Task GetCurrentTasks()
 	 {
-	    List<string> tasks = await _PS.GetCurrentlyAddedTasks();
+	    List<string> tasks = await _PS.GetCurrentlyAddedTasks(CancellationToken.None);
 	    if (tasks == null)
 	    {
 		  return;
@@ -77,7 +77,7 @@ namespace ProcessTimeCheckerWPF
 	 }
 	 private async Task AddNewTask(string taskName)
 	 {
-	    await _PS.SaveTaskInformation(taskName);
+	    await _PS.SaveTaskInformation(taskName, CancellationToken.None);
 	    ClearListview();
 	    ClearTextBox();
 	    await Task.Run(() => GetCurrentTasks());
@@ -98,7 +98,7 @@ namespace ProcessTimeCheckerWPF
 								    MessageBoxImage.Question);
 		  if (dialog == MessageBoxResult.Yes)
 		  {
-			await _PS.DeleteTask(selectedTask);
+			await _PS.DeleteTask(selectedTask, CancellationToken.None);
 			ClearListview();
 			await GetCurrentTasks();
 			ClearTextBox();

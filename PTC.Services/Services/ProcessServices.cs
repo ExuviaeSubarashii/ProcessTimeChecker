@@ -7,7 +7,7 @@ namespace PTC.Services.Services
 {
    public class ProcessServices() : ILookForProcessInterface
    {
-	 public async Task<List<TasksDto>> GetTheProcesses()
+	 public async Task<List<TasksDto>> GetTheProcesses(CancellationToken cancellationToken)
 	 {
 	    List<TasksDto> tasks = new();
 
@@ -23,9 +23,9 @@ namespace PTC.Services.Services
 			foreach (var item in processNames)
 			{
 			   Process? localbyname = Process.GetProcessesByName(item).FirstOrDefault();
+
 			   if (localbyname is { })
 			   {
-
 				 TasksDto dto = new TasksDto
 				 {
 				    ProcessName = localbyname.ProcessName,
@@ -57,7 +57,7 @@ namespace PTC.Services.Services
 	    int minutes = timeDifference.Minutes;
 	    return $"{totalHours}:{minutes}";
 	 }
-	 public async Task SaveTaskInformation(string taskName)
+	 public async Task SaveTaskInformation(string taskName, CancellationToken cancellationToken)
 	 {
 	    try
 	    {
@@ -88,9 +88,9 @@ namespace PTC.Services.Services
 		  throw;
 	    }
 	 }
-	 public async Task<List<string>> GetCurrentlyAddedTasks()
+	 public async Task<List<string>> GetCurrentlyAddedTasks(CancellationToken cancellationToken)
 	 {
-	    if (!await CreateTaskNamesFileIfDoesntExist())
+	    if (!await CreateTaskNamesFileIfDoesntExist(CancellationToken.None))
 	    {
 		  var processName = await File.ReadAllTextAsync(GlobalVariables._txtFilePath);
 		  var processNames = processName.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -101,7 +101,7 @@ namespace PTC.Services.Services
 		  return new List<string>();
 	    }
 	 }
-	 public async Task DeleteTask(string taskName)
+	 public async Task DeleteTask(string taskName, CancellationToken cancellationToken)
 	 {
 	    string processName = await File.ReadAllTextAsync(GlobalVariables._txtFilePath);
 	    List<string> processNames = processName.Split(',').ToList();
@@ -114,11 +114,10 @@ namespace PTC.Services.Services
 		  await using (StreamWriter outputFile = new(GlobalVariables._txtFilePath, true))
 		  {
 			await outputFile.WriteAsync(string.Join(",", processNames));
-			return;
 		  }
 	    }
 	 }
-	 public async Task<bool> CreateTaskNamesFileIfDoesntExist()
+	 public async Task<bool> CreateTaskNamesFileIfDoesntExist(CancellationToken cancellationToken)
 	 {
 	    if (!File.Exists(GlobalVariables._txtFilePath))
 	    {
@@ -127,12 +126,11 @@ namespace PTC.Services.Services
 	    }
 	    return false;
 	 }
-
 	 public async Task BulkDeleteTasks(List<TasksDto> taskList, CancellationToken cancellationToken)
 	 {
 	    foreach (var item in taskList)
 	    {
-		  await DeleteTask(item.ProcessName.ToLower());
+		  await DeleteTask(item.ProcessName.ToLower(), CancellationToken.None);
 	    }
 	 }
    }
