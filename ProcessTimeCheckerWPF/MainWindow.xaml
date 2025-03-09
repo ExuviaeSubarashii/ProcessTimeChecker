@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Process Time Checker" Height="400" Width="800" Loaded="Window_Loaded" Icon="/PTC.png" WindowStartupLocation="CenterScreen">
+
    <Window.Resources>
 	 <!-- Style for Menu -->
 	 <Style TargetType="Menu">
@@ -21,37 +22,39 @@
 	    <Setter Property="Foreground" Value="#E8C872"/>
 	 </Style>
    </Window.Resources>
-   <Grid>
+   <Border Name="WindowBorder" BorderThickness="5">
 
-	 <Grid.RowDefinitions>
-	    <RowDefinition Height="Auto" />
-	    <RowDefinition Height="*" />
-	 </Grid.RowDefinitions>
+	 <Grid>
 
-	 <Menu Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
-	    <MenuItem Name="SettingsTop">
-		  <MenuItem Name="StayOnTop"
+	    <Grid.RowDefinitions>
+		  <RowDefinition Height="Auto" />
+		  <RowDefinition Height="*" />
+	    </Grid.RowDefinitions>
+
+	    <Menu Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
+		  <MenuItem Name="SettingsTop">
+			<MenuItem Name="StayOnTop"
                           Click="StayOnTop_Click" />
-		  <MenuItem
+			<MenuItem
                     Name="ChangeTheme"
                     Click="ChangeTheme_Click"
                     />
-		  <MenuItem
+			<MenuItem
                     Name="ChangeRefreshTimer"
                     Click="ChangeRefreshTimer_Click"
                     />
-		  <MenuItem
+			<MenuItem
                     Name="ChangeLanguage"
                     Click="ChangeLanguage_Click"/>
-	    </MenuItem>
-	    <MenuItem Name="AddNewAppTop">
-		  <MenuItem Name="AddNewApp"
+		  </MenuItem>
+		  <MenuItem Name="AddNewAppTop">
+			<MenuItem Name="AddNewApp"
                           Click="AddNewApp_Click" />
-	    </MenuItem>
-	    <Label Name="refreshRateLabel"/>
-	 </Menu>
+		  </MenuItem>
+		  <Label Name="refreshRateLabel"/>
+	    </Menu>
 
-	 <Grid Grid.Row="1">
+	    <Grid Grid.Row="1">
 	    <DataGrid Name="taskDataGrid"
           ItemsSource="{Binding TasksDtos}"
           ColumnWidth="*"
@@ -70,51 +73,54 @@
           AutoGenerateColumns="False"
           RowBackground="Transparent"
           RowHeight="45"
-          SelectionMode="Single"
           CanUserAddRows="False"
           CanUserDeleteRows="False"
           Foreground="#333333"
           VerticalGridLinesBrush="#888888"
-          HorizontalGridLinesBrush="#888888">
+          HorizontalGridLinesBrush="#888888"
+          MouseUp="taskDataGrid_MouseUp"
+           SelectionMode="Extended"
+			    SelectedCellsChanged="taskDataGrid_SelectedCellsChanged_1">
 
-		  <DataGrid.ContextMenu>
-			<ContextMenu>
-			   <MenuItem Header="Remove Task"  x:Name="RemoveTask" Click="RemoveTask_Click"/>
-			   <MenuItem Header="" x:Name="GetTaskName" Click="GetTaskName_Click"/>
-			   <MenuItem Header="" x:Name="KillTask" Click="KillTask_Click"/>
-			</ContextMenu>
-		  </DataGrid.ContextMenu>
+			<DataGrid.ContextMenu>
+			   <ContextMenu>
+				 <MenuItem   x:Name="RemoveTask" Click="RemoveTask_Click"/>
+				 <MenuItem x:Name="RefreshDataGrid" Click="RefreshDataGrid_Click"/>
+				 <MenuItem  x:Name="KillTask" Click="KillTask_Click"/>
+			   </ContextMenu>
+			</DataGrid.ContextMenu>
 
-		  <DataGrid.Columns>
-			<DataGridTextColumn x:Name="dataGridColumnTaskName" Binding="{Binding TaskName}" Width="2*">
-			   <DataGridTextColumn.ElementStyle>
-				 <Style TargetType="TextBlock">
-				    <Setter Property="VerticalAlignment" Value="Center"/>
-				    <Setter Property="TextWrapping" Value="Wrap"/>
+			<DataGrid.Columns>
+			   <DataGridTextColumn x:Name="dataGridColumnTaskName" Binding="{Binding TaskName}" Width="2*">
+				 <DataGridTextColumn.ElementStyle>
+				    <Style TargetType="TextBlock">
+					  <Setter Property="VerticalAlignment" Value="Center"/>
+					  <Setter Property="TextWrapping" Value="Wrap"/>
+				    </Style>
+				 </DataGridTextColumn.ElementStyle>
+			   </DataGridTextColumn>
 
-				 </Style>
-			   </DataGridTextColumn.ElementStyle>
-			</DataGridTextColumn>
+			   <DataGridTextColumn x:Name="dataGridColumnTaskHour" Binding="{Binding TaskHour}" Width="70">
+				 <DataGridTextColumn.ElementStyle>
+				    <Style TargetType="TextBlock">
+					  <Setter Property="HorizontalAlignment" Value="Center" />
+				    </Style>
+				 </DataGridTextColumn.ElementStyle>
 
-			<DataGridTextColumn x:Name="dataGridColumnTaskHour" Binding="{Binding TaskHour}" Width="70">
-			   <DataGridTextColumn.ElementStyle>
-				 <Style TargetType="TextBlock">
-				    <Setter Property="HorizontalAlignment" Value="Center" />
-				 </Style>
-			   </DataGridTextColumn.ElementStyle>
+			   </DataGridTextColumn>
+			   <DataGridTextColumn x:Name="dataGridColumnTaskOpening" Binding="{Binding TaskOpening}" Width="1*">
+				 <DataGridTextColumn.ElementStyle>
+				    <Style TargetType="TextBlock">
+					  <Setter Property="HorizontalAlignment" Value="Center" />
+				    </Style>
+				 </DataGridTextColumn.ElementStyle>
+			   </DataGridTextColumn>
+			</DataGrid.Columns>
+		  </DataGrid>
 
-			</DataGridTextColumn>
-			<DataGridTextColumn x:Name="dataGridColumnTaskOpening" Binding="{Binding TaskOpening}" Width="1*">
-			   <DataGridTextColumn.ElementStyle>
-				 <Style TargetType="TextBlock">
-				    <Setter Property="HorizontalAlignment" Value="Center" />
-				 </Style>
-			   </DataGridTextColumn.ElementStyle>
-			</DataGridTextColumn>
-		  </DataGrid.Columns>
-	    </DataGrid>
+	    </Grid>
 
 	 </Grid>
+   </Border>
 
-   </Grid>
 </Window>

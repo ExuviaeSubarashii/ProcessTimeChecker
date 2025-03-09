@@ -29,10 +29,15 @@ namespace PTC.Services.Services
 				 TasksDto dto = new TasksDto
 				 {
 				    ProcessName = localbyname.ProcessName,
-				    TaskName = $"{localbyname.ProcessName} || ({localbyname.MainWindowTitle})",
+
+				    TaskName = $"{localbyname.ProcessName}",
 				    TaskOpening = localbyname.StartTime,
 				    TaskHour = FormatTimeSpan(localbyname.StartTime),
 				 };
+				 if (!string.IsNullOrEmpty(localbyname.MainWindowTitle))
+				 {
+				    dto.TaskName += $"\n ({localbyname.MainWindowTitle})";
+				 }
 				 tasks.Add(dto);
 			   }
 			}
@@ -102,7 +107,7 @@ namespace PTC.Services.Services
 	    List<string> processNames = processName.Split(',').ToList();
 	    var match = processNames.Select(x => taskName.ToLower()).FirstOrDefault().ToLower();
 
-	    if (string.IsNullOrEmpty(match))
+	    if (!string.IsNullOrEmpty(match))
 	    {
 		  processNames.Remove(match);
 		  File.Create(GlobalVariables._txtFilePath).Close();
@@ -121,6 +126,14 @@ namespace PTC.Services.Services
 		  return true;
 	    }
 	    return false;
+	 }
+
+	 public async Task BulkDeleteTasks(List<TasksDto> taskList, CancellationToken cancellationToken)
+	 {
+	    foreach (var item in taskList)
+	    {
+		  await DeleteTask(item.ProcessName.ToLower());
+	    }
 	 }
    }
 }

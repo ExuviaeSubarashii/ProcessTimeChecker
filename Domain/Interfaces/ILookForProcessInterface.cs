@@ -4,10 +4,11 @@ namespace PTC.Domain.Interfaces
 {
    public interface ILookForProcessInterface
    {
-	 Task<List<TasksDto>> GetTheProcesses();
-	 Task SaveTaskInformation(string taskName);
-	 Task<List<string>> GetCurrentlyAddedTasks();
-	 Task DeleteTask(string taskName);
-	 Task<bool> CreateTaskNamesFileIfDoesntExist();
+	 public Task<List<TasksDto>> GetTheProcesses();
+	 public Task SaveTaskInformation(string taskName);
+	 public Task<List<string>> GetCurrentlyAddedTasks();
+	 public Task DeleteTask(string taskName);
+	 public Task<bool> CreateTaskNamesFileIfDoesntExist();
+	 public Task BulkDeleteTasks(List<TasksDto> taskList, CancellationToken cancellationToken);
    }
 }

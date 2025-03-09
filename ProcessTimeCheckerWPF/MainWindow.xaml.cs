@@ -7,7 +7,9 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace ProcessTimeCheckerWPF
 {
@@ -22,9 +24,12 @@ namespace ProcessTimeCheckerWPF
 	    DataContext = this;
 	    _tasksDtos = new();
 	    InitializeComponent();
+
 	 }
 
+	 private readonly DispatcherTimer myTimer = new DispatcherTimer();
 	 public ObservableCollection<TasksDto> _tasksDtos { get; set; } = new();
+	 public List<TasksDto> selectedTasks = new List<TasksDto>();
 	 public ObservableCollection<TasksDto> TasksDtos
 	 {
 	    get => _tasksDtos;
@@ -52,6 +57,11 @@ namespace ProcessTimeCheckerWPF
 	    await SetLanguageSettings();
 	    await SetDataGridHeadersAsync();
 	    await SetDataGridData();
+
+	    int refreshTime = await _SS.GetRefreshTime();
+	    myTimer.Tick += new EventHandler(TimerEventProcessor);
+	    myTimer.Interval = TimeSpan.FromSeconds(refreshTime);
+	    myTimer.Start();
 	 }
 	 private async void TimerEventProcessor(object? sender, EventArgs e)
 	 {
@@ -65,6 +75,18 @@ namespace ProcessTimeCheckerWPF
 	 {
 	    bool isTopMost = await Task.Run(() => _SS.IsTopMostAsync());
 	    this.Topmost = isTopMost;
+	    if (isTopMost is true)
+	    {
+		  WindowBorder.BorderBrush = Brushes.Blue;
+		  WindowBorder.BorderThickness = new Thickness(5);
+	    }
+	    else
+	    {
+		  WindowBorder.BorderBrush = Brushes.Transparent;
+		  WindowBorder.BorderThickness = new Thickness(0);
+
+	    }
+
 	 }
 	 private async void StayOnTop_Click(object sender, RoutedEventArgs e)
 	 {
@@ -77,8 +99,6 @@ namespace ProcessTimeCheckerWPF
 	    newApp.ShowDialog();
 	    await SetDataGridData();
 	 }
-
-
 	 private async Task SetLanguageSettings()
 	 {
 	    int refreshTime = await _SS.GetRefreshTime();
@@ -91,6 +111,9 @@ namespace ProcessTimeCheckerWPF
 	    AddNewApp.Header = currentLanguage == "Turkish" ? "Yeni Uygulama Ekle" : "Add New App";
 	    refreshRateLabel.Content = currentLanguage == "Turkish" ? $"Tekrarlama Hızı: {refreshTime}" : $"Refresh Rate: {refreshTime}";
 	    ChangeLanguage.Header = currentLanguage == "Turkish" ? "Dili Değiştir" : "Change Language";
+	    RemoveTask.Header = currentLanguage == "Turkish" ? "Listeden Kaldır" : "Remove Task";
+	    RefreshDataGrid.Header = currentLanguage == "Turkish" ? "Yenile" : "Refresh";
+	    KillTask.Header = currentLanguage == "Turkish" ? "İşlemi Sonlandır" : "Kill Task";
 	 }
 	 private async void ChangeTheme_Click(object sender, RoutedEventArgs e)
 	 {
@@ -198,23 +221,26 @@ namespace ProcessTimeCheckerWPF
 		  RestartApplication();
 	    }
 	 }
-
-
 	 private async void RemoveTask_Click(object sender, RoutedEventArgs e)
 	 {
-	    if (taskDataGrid.SelectedItem is TasksDto selectedItem)
+	    if (taskDataGrid.SelectedItem is TasksDto selectedItem && taskDataGrid.SelectedItems.Count < 1)
 	    {
 		  await _PS.DeleteTask(selectedItem.ProcessName.ToLower());
 
 		  await SetDataGridData();
 	    }
-	 }
+	    else if (taskDataGrid.SelectedItems.Count > 1)
+	    {
+		  await _PS.BulkDeleteTasks(selectedTasks, CancellationToken.None);
+		  await SetDataGridData();
+		  selectedTasks.Clear();
+	    }
 
-	 private async void GetTaskName_Click(object sender, RoutedEventArgs e)
+	 }
+	 private async void RefreshDataGrid_Click(object sender, RoutedEventArgs e)
 	 {
 	    await SetDataGridData();
 	 }
-
 	 private async void KillTask_Click(object sender, RoutedEventArgs e)
 	 {
 	    if (taskDataGrid.SelectedItem is TasksDto selectedItem)
@@ -225,6 +251,37 @@ namespace ProcessTimeCheckerWPF
 			item.Kill();
 		  }
 		  await SetDataGridData();
+	    }
+	 }
+	 private void taskDataGrid_MouseUp(object sender, MouseButtonEventArgs e)
+	 {
+	    if (taskDataGrid.SelectedItems.Count > 1 && Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.LeftCtrl))
+	    {
+		  List<TasksDto> selectedItem = taskDataGrid.SelectedItems.Cast<TasksDto>().ToList();
+		  if (selectedItem.Count > 0)
+		  {
+			selectedTasks.Clear();
+
+			foreach (var item in selectedItem)
+			{
+			   selectedTasks.Add(item);
+			}
+		  }
+	    }
+	    else
+	    {
+		  return;
+	    }
+	 }
+	 private void taskDataGrid_SelectedCellsChanged_1(object sender, SelectedCellsChangedEventArgs e)
+	 {
+	    if (taskDataGrid.SelectedItems.Count > 1)
+	    {
+		  myTimer.Stop();
+	    }
+	    else
+	    {
+		  myTimer.Start();
 	    }
 	 }
    }
