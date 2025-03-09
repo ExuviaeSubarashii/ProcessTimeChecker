@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProcessTimeCheckerWPF"
         mc:Ignorable="d"
-        Title="Add New App" Height="400" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/PTC.png" FontFamily="Segoe UI" FontWeight="Bold">
+        Title="Add New App" Height="400" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/PTC.png" FontFamily="Segoe UI" FontWeight="Bold" Topmost="True">
     <Window.Resources>
         <Style x:Key="ClearFile" TargetType="Button">
             <Setter Property="Background" Value="#750E21"/>
