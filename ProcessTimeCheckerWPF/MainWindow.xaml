@@ -80,7 +80,7 @@
           HorizontalGridLinesBrush="#888888"
           MouseUp="taskDataGrid_MouseUp"
            SelectionMode="Extended"
-			    SelectedCellsChanged="taskDataGrid_SelectedCellsChanged_1">
+			    SelectedCellsChanged="taskDataGrid_SelectedCellsChanged">
 
 			<DataGrid.ContextMenu>
 			   <ContextMenu>
@@ -95,7 +95,7 @@
 				 <DataGridTextColumn.ElementStyle>
 				    <Style TargetType="TextBlock">
 					  <Setter Property="VerticalAlignment" Value="Center"/>
-					  <Setter Property="TextWrapping" Value="Wrap"/>
+					  <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
 				    </Style>
 				 </DataGridTextColumn.ElementStyle>
 			   </DataGridTextColumn>

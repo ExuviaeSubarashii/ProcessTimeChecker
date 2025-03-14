@@ -5,28 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProcessTimeCheckerWPF"
         mc:Ignorable="d"
-        Title="Add New App" Height="400" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/PTC.png" FontFamily="Segoe UI" FontWeight="Bold" Topmost="True">
+        Title="Add New App" Height="400" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen"
+        Icon="/PTC.png" FontFamily="Segoe UI" FontWeight="Bold" Topmost="True" ResizeMode="NoResize">
     <Window.Resources>
         <Style x:Key="ClearFile" TargetType="Button">
-            <Setter Property="Background" Value="#750E21"/>
-            <Setter Property="Foreground" Value="LightBlue"/>
+            <Setter Property="Background" Value="#750E21" />
+            <Setter Property="Foreground" Value="LightBlue" />
         </Style>
     </Window.Resources>
     <Grid Background="#191919">
-        <Button Name="ClearFile" Margin="8,50,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Width="165" Click="ClearFile_Click" Style="{StaticResource ClearFile}">
-            <TextBlock Name="ClearFileText" TextWrapping="Wrap" TextAlignment="Center"/>
+        <Button Name="ClearFile" Margin="8,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30"
+                Width="165" Click="ClearFile_Click" Style="{StaticResource ClearFile}">
+            <TextBlock Name="ClearFileText" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>
-        <TextBox Name="NewTaskNameBox" Margin="10,100,627,0" Background="#BDBDBD" Foreground="White" VerticalAlignment="Top" Height="50" Width="165"/>
-        <Button Name="AddNewAppButton" Margin="10,170,0,0" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#2196F3" Foreground="White" Height="50" Width="170" Click="AddNewAppButton_Click">
+        <Grid>
+            <TextBox Name="NewTaskNameBox" Margin="10,100,627,0" Background="#BDBDBD" Foreground="White"
+                     HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="50" AcceptsReturn="False" />
+        </Grid>
+        <Button Name="AddNewAppButton" Margin="10,170,0,0" FontWeight="Bold" VerticalAlignment="Top"
+                HorizontalAlignment="Left" Background="#2196F3" Foreground="White" Height="50" Width="170"
+                Click="AddNewAppButton_Click">
             <TextBlock Name="AddNewAppText" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>
-        <Label Name="InformationLabel" Margin="13,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#757575"></Label>
-        <ListView Name="listView" SelectionChanged="listView_SelectionChanged" Margin="212,42,22,42" Background="#FFFFFF" BorderBrush="#757575" Height="300" PreviewKeyDown="listView_PreviewKeyDown"/>
+        <Label Name="InformationLabel" Margin="13,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
+               Foreground="#757575">
+        </Label>
+        <ListView Name="listView" SelectionChanged="listView_SelectionChanged" Margin="212,42,22,42"
+                  Background="#FFFFFF" BorderBrush="#757575" Height="300" PreviewKeyDown="listView_PreviewKeyDown"
+                  ItemsSource="{Binding CurrentTasks}" />
         <Border BorderThickness="4" CornerRadius="8">
-            <Button Name="HowToAddApps" Margin="40,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20" Background="Blue" Foreground="White" Content="?" >
+            <Button Name="HowToAddApps" Margin="40,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right"
+                    Width="20" Background="Blue" Foreground="White" Content="?">
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
+                        <Setter Property="CornerRadius" Value="5" />
                     </Style>
                 </Button.Resources>
                 <Button.ToolTip>
