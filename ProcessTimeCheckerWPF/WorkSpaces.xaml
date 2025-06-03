@@ -1,0 +1,122 @@
+﻿<Window x:Class="ProcessTimeCheckerWPF.WorkSpaces"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProcessTimeCheckerWPF"
+        mc:Ignorable="d"
+        Title="WorkSpaces" Height="450" Width="800" Loaded="Window_Loaded">
+
+   <Grid Margin="10">
+	 <Grid.RowDefinitions>
+	    <RowDefinition Height="Auto"/>
+	    <!-- Top controls -->
+	    <RowDefinition Height="*"/>
+	    <!-- DataGrid -->
+	 </Grid.RowDefinitions>
+
+	 <!-- Top Bar with TextBlock, Label, and Button -->
+	 <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Top">
+	    <TextBlock x:Name="WorkSpaceNameTextBox"
+                   Text="Workspace Name"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   FontSize="12"/>
+	    <TextBox x:Name="WorkSpaceNameInput"
+			  Width="100"
+			  Margin="10,0,0,0"
+			  VerticalAlignment="Center"
+			  FontSize="14"
+			  FontFamily="Segoe UI"/>
+	    <Label Content="Choose Files"
+               VerticalAlignment="Center"
+               FontSize="14"/>
+	    <TextBlock x:Name="WorkSpaceDescriptionTextBox"
+          Text="Workspace Description"
+          VerticalAlignment="Center"
+          FontWeight="Bold"
+          FontSize="12"/>
+	    <TextBox x:Name="WorkSpaceDescriptionInput"
+		  Width="100"
+		  Margin="10,0,0,0"
+		  VerticalAlignment="Center"
+		  FontSize="14"
+		  FontFamily="Segoe UI"/>
+	    <Button x:Name="ChooseFilesButton"
+                Content="Choose Files"
+                Click="ChooseFilesButton_Click"
+                Padding="10,4"
+                FontSize="14"
+                VerticalAlignment="Center"/>
+
+	    <Button x:Name="AddWorkSpaceButton" Click="AddWorkSpaceButton_Click" Padding="10,4">Create New Workspace</Button>
+	 </StackPanel>
+
+	 <!-- DataGrid -->
+	 <DataGrid Grid.Row="1"
+              Name="workSpaceDataGrid"
+              ItemsSource="{Binding WorkspaceDtos}"
+              ColumnWidth="*"
+              FontSize="14"
+              FontFamily="Segoe UI"
+              HeadersVisibility="Column"
+              CanUserSortColumns="False"
+              CanUserResizeColumns="False"
+              CanUserResizeRows="False"
+              BorderBrush="#CCCCCC"
+              BorderThickness="1"
+              RowHeaderWidth="2"
+              RowHeaderStyle="{x:Null}"
+              AutoGenerateColumns="False"
+              RowBackground="Transparent"
+              RowHeight="45"
+              CanUserAddRows="False"
+              CanUserDeleteRows="False"
+              Foreground="#333333"
+              VerticalGridLinesBrush="#888888"
+              HorizontalGridLinesBrush="#888888"
+              SelectionMode="Extended"
+			IsReadOnly="True"
+              MouseDoubleClick="workSpaceDataGrid_MouseDoubleClick">
+
+	    <DataGrid.ContextMenu>
+		  <ContextMenu>
+			<MenuItem x:Name="DeleteWorkSpace" Header="DeleteWorkSpace"/>
+			<MenuItem x:Name="RefreshDataGrid" Header="Refresh"/>
+			<MenuItem x:Name="EditWorkSpace" Click="EditWorkSpace_Click" Header="Edit WorkSpace"/>
+		  </ContextMenu>
+	    </DataGrid.ContextMenu>
+
+	    <DataGrid.Columns>
+		  <DataGridTextColumn x:Name="dataGridColumnId" Binding="{Binding Id}" Visibility="Collapsed" />
+
+		  <DataGridTextColumn x:Name="dataGridColumnWorkSpaceName" Binding="{Binding WorkSpaceName}" Width="2*">
+			<DataGridTextColumn.ElementStyle>
+			   <Style TargetType="TextBlock">
+				 <Setter Property="VerticalAlignment" Value="Center"/>
+				 <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+			   </Style>
+			</DataGridTextColumn.ElementStyle>
+		  </DataGridTextColumn>
+
+		  <DataGridTextColumn x:Name="dataGridColumnTaskHour" Binding="{Binding WorkSpaceDescription}" Width="70">
+			<DataGridTextColumn.ElementStyle>
+			   <Style TargetType="TextBlock">
+				 <Setter Property="HorizontalAlignment" Value="Center" />
+			   </Style>
+			</DataGridTextColumn.ElementStyle>
+		  </DataGridTextColumn>
+
+		  <DataGridTextColumn x:Name="dataGridColumnTaskOpening" Binding="{Binding WorkSpaceItemsDisplay}" Width="1*">
+			<DataGridTextColumn.ElementStyle>
+			   <Style TargetType="TextBlock">
+				 <Setter Property="HorizontalAlignment" Value="Center" />
+			   </Style>
+			</DataGridTextColumn.ElementStyle>
+		  </DataGridTextColumn>
+	    </DataGrid.Columns>
+	 </DataGrid>
+   </Grid>
+
+
+</Window>

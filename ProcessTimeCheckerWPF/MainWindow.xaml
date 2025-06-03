@@ -51,11 +51,15 @@
 			<MenuItem Name="AddNewApp"
                           Click="AddNewApp_Click" />
 		  </MenuItem>
+		  <MenuItem Name="WorkSpacesButton">
+			<MenuItem Name="ShowWorkSpaces"
+               Click="ShowWorkSpaces_Click" />
+		  </MenuItem>
 		  <Label Name="refreshRateLabel"/>
 	    </Menu>
 
 	    <Grid Grid.Row="1">
-	    <DataGrid Name="taskDataGrid"
+		  <DataGrid Name="taskDataGrid"
           ItemsSource="{Binding TasksDtos}"
           ColumnWidth="*"
           VerticalAlignment="Stretch"
@@ -79,14 +83,13 @@
           VerticalGridLinesBrush="#888888"
           HorizontalGridLinesBrush="#888888"
           MouseUp="taskDataGrid_MouseUp"
-           SelectionMode="Extended"
-			    SelectedCellsChanged="taskDataGrid_SelectedCellsChanged">
+           SelectionMode="Extended">
 
 			<DataGrid.ContextMenu>
 			   <ContextMenu>
-				 <MenuItem   x:Name="RemoveTask" Click="RemoveTask_Click"/>
+				 <MenuItem x:Name="RemoveTask" Click="RemoveTask_Click"/>
 				 <MenuItem x:Name="RefreshDataGrid" Click="RefreshDataGrid_Click"/>
-				 <MenuItem  x:Name="KillTask" Click="KillTask_Click"/>
+				 <MenuItem x:Name="KillTask" Click="KillTask_Click"/>
 			   </ContextMenu>
 			</DataGrid.ContextMenu>
 
