@@ -15,6 +15,7 @@
 	 </Grid.RowDefinitions>
 
 	 <StackPanel Grid.Row="0" Orientation="Vertical" Margin="0,0,0,10">
+	    
 	    <TextBox x:Name="WorkSpaceNamePlaceHolderTextBox"
                  Margin="0,5,0,5"
                  Padding="8"
@@ -49,7 +50,15 @@
         FontSize="14"
         BorderBrush="#CCCCCC"
         BorderThickness="1"
-        Padding="5">
+        Padding="5"
+	   >
+	    <ListView.ContextMenu>
+		  <ContextMenu>
+			<MenuItem x:Name="ShowInExplorer" Click="ShowInExplorer_Click" Header="Show in Explorer"/>
+			<MenuItem x:Name="RemoveFromList" Click="RemoveFromList_Click" Header="Remove From List"/>
+		  </ContextMenu>
+	    </ListView.ContextMenu>
+	    
 	    <!-- You can customize ItemTemplate here if needed -->
 	 </ListView>
 

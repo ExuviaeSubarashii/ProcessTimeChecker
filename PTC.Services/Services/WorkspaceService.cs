@@ -61,7 +61,11 @@ namespace PTC.Services.Services
 
 	 public async Task RemoveWorkSpace(WorkSpaceDto workSpaceDto)
 	 {
-	    throw new NotImplementedException();
+	    var allWorkSpaces = await GetAllWorkSpaces();
+	    var existingWorkSpace = allWorkSpaces.FirstOrDefault(ws => ws.WorkSpaceId == workSpaceDto.WorkSpaceId);
+	    allWorkSpaces.Remove(existingWorkSpace);
+	    string jsonString = JsonSerializer.Serialize(allWorkSpaces, new JsonSerializerOptions { WriteIndented = true });
+	    await File.WriteAllTextAsync(GlobalVariables._workspacesFilePath, jsonString);
 	 }
 
 	 public async Task UpdateWorkSpace(WorkSpaceDto workSpaceDto)

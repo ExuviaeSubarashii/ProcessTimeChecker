@@ -81,7 +81,7 @@
 
 	    <DataGrid.ContextMenu>
 		  <ContextMenu>
-			<MenuItem x:Name="DeleteWorkSpace" Header="DeleteWorkSpace"/>
+			<MenuItem x:Name="DeleteWorkSpace" Header="DeleteWorkSpace" Click="DeleteWorkSpace_Click"/>
 			<MenuItem x:Name="RefreshDataGrid" Header="Refresh"/>
 			<MenuItem x:Name="EditWorkSpace" Click="EditWorkSpace_Click" Header="Edit WorkSpace"/>
 		  </ContextMenu>

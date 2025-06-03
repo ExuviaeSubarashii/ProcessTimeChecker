@@ -108,5 +108,14 @@ namespace ProcessTimeCheckerWPF
 	    editWorkSpace.Closed += async (s, args) => await SetDataGridWorkSpaceData();
 	    editWorkSpace.Show();
 	 }
+
+	 private async void DeleteWorkSpace_Click(object sender, RoutedEventArgs e)
+	 {
+	    if (workSpaceDataGrid.SelectedItem is WorkSpaceDto selectedWorkSpace)
+	    {
+		  await _WS.RemoveWorkSpace(selectedWorkSpace);
+		  await SetDataGridWorkSpaceData();
+	    }
+	 }
    }
 }

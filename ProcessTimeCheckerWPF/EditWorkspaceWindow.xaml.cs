@@ -14,7 +14,7 @@ namespace ProcessTimeCheckerWPF
    {
 	 private readonly WorkspaceService _WS = new();
 	 public static WorkSpaceDto EditWorkSpaceDto { get; set; } = new();
-	 public ObservableCollection<string> FilePaths { get; set; } = new ObservableCollection<string>();
+	 public ObservableCollection<string?> FilePaths { get; set; } = new ObservableCollection<string?>();
 	 public ObservableCollection<string> _workspaceDtos { get; set; } = new();
 	 public ObservableCollection<string> WorkspaceDtos
 	 {
@@ -40,6 +40,7 @@ namespace ProcessTimeCheckerWPF
 	    InitializeComponent();
 	    EditWorkSpaceDto = _editWorkSpaceDto;
 	    openFileDialog.FileOk += OpenFileDialog_FileOk;
+
 	 }
 
 	 private void OpenFileDialog_FileOk(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -68,14 +69,35 @@ namespace ProcessTimeCheckerWPF
 		  WorkSpaceId = EditWorkSpaceDto.WorkSpaceId ?? Guid.NewGuid(),
 		  WorkSpaceDescription = WorkSpaceDescriptionPlaceHolderTextBox.Text,
 		  WorkSpaceName = WorkSpaceNamePlaceHolderTextBox.Text,
-		  WorkSpaceItems = WorkSpaceFilesListView.Items.Cast<string?>().ToList(),
+		  WorkSpaceItems = FilePaths.ToList()
 	    };
 	    await _WS.UpdateWorkSpace(editedWorkSpace);
+	    this.Close();
 	 }
 
 	 private void AddNewFileButton_Click(object sender, RoutedEventArgs e)
 	 {
 	    openFileDialog.ShowDialog();
 	 }
+
+	 private void ShowInExplorer_Click(object sender, RoutedEventArgs e)
+	 {
+	    if (WorkSpaceFilesListView.SelectedItem is string selectedFile)
+	    {
+
+	    }
+	 }
+
+
+	 private void RemoveFromList_Click(object sender, RoutedEventArgs e)
+	 {
+	    if (WorkSpaceFilesListView.SelectedItem is string selectedFile)
+	    {
+		  FilePaths.Remove(selectedFile);
+		  WorkSpaceFilesListView.ItemsSource = FilePaths;
+	    }
+	 }
+
+
    }
 }
