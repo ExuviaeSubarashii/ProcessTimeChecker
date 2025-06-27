@@ -15,7 +15,7 @@
 	 </Grid.RowDefinitions>
 
 	 <StackPanel Grid.Row="0" Orientation="Vertical" Margin="0,0,0,10">
-	    
+
 	    <TextBox x:Name="WorkSpaceNamePlaceHolderTextBox"
                  Margin="0,5,0,5"
                  Padding="8"
@@ -29,7 +29,7 @@
                  />
 	 </StackPanel>
 
-	 <Button Grid.Row="1"
+	 <!--<Button Grid.Row="1"
             x:Name="AddNewFileButton"
             Content="Add New File"
             Padding="10,6"
@@ -42,7 +42,25 @@
             BorderBrush="#007ACC"
             BorderThickness="1"
             Cursor="Hand" 
-		    Click="AddNewFileButton_Click"/>
+		    Click="AddNewFileButton_Click"/>-->
+	 <ComboBox 
+	    Padding="10,6"
+Margin="0,0,0,10"
+HorizontalAlignment="Left"
+Background="#007ACC"
+FontWeight="SemiBold"
+BorderBrush="#007ACC"
+BorderThickness="1"
+Cursor="Hand" 
+	    
+	    Grid.Row="1"
+FontSize="14"
+VerticalAlignment="Center"
+x:Name="ComboBoxOptions"
+SelectionChanged="ComboBoxOptions_SelectionChanged">
+	    <ComboBoxItem x:Name="ChooseFilesButton" Content="Add File"/>
+	    <ComboBoxItem x:Name="AddLinkButton" Content="Add Link"/>
+	 </ComboBox>
 
 	 <ListView Grid.Row="3"
         x:Name="WorkSpaceFilesListView"
@@ -51,6 +69,10 @@
         BorderBrush="#CCCCCC"
         BorderThickness="1"
         Padding="5"
+        AllowDrop="True"
+          PreviewMouseLeftButtonDown="WorkSpaceFilesListView_PreviewMouseLeftButtonDown"
+          PreviewMouseMove="WorkSpaceFilesListView_PreviewMouseMove"
+          Drop="WorkSpaceFilesListView_Drop"
 	   >
 	    <ListView.ContextMenu>
 		  <ContextMenu>
@@ -58,7 +80,7 @@
 			<MenuItem x:Name="RemoveFromList" Click="RemoveFromList_Click" Header="Remove From List"/>
 		  </ContextMenu>
 	    </ListView.ContextMenu>
-	    
+
 	    <!-- You can customize ItemTemplate here if needed -->
 	 </ListView>
 

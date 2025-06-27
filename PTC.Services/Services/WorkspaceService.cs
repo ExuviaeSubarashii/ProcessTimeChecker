@@ -19,14 +19,16 @@ namespace PTC.Services.Services
 	 {
 	    if (!File.Exists(GlobalVariables._workspacesFilePath))
 	    {
-		  await File.WriteAllTextAsync(GlobalVariables._workspacesFilePath, "[]");
-		  WorkSpaceDto workspaces = new WorkSpaceDto
+		  var workspaces = new List<WorkSpaceDto>
 		  {
-			WorkSpaceDescription = "Default Workspace",
-			WorkSpaceId = Guid.NewGuid(),
-			WorkSpaceName = "Default Workspace",
-			WorkSpaceItems = ["PTC.exe"]
-		  };
+			    new WorkSpaceDto
+			    {
+				   WorkSpaceDescription = "Default Workspace",
+				   WorkSpaceId = Guid.NewGuid(),
+				   WorkSpaceName = "Default Workspace",
+				   WorkSpaceItems = ["PTC.exe"]
+			    }
+			};
 		  string jsonString = JsonSerializer.Serialize(workspaces, new JsonSerializerOptions { WriteIndented = true });
 		  await File.WriteAllTextAsync(GlobalVariables._workspacesFilePath, jsonString);
 		  return true;

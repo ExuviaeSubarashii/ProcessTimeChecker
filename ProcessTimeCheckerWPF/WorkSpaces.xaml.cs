@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ProcessTimeCheckerWPF
 {
@@ -19,6 +20,7 @@ namespace ProcessTimeCheckerWPF
 	 {
 	    Multiselect = true,
 	 };
+	 List<string> links = new();
 	 public ObservableCollection<WorkSpaceDto> WorkspaceDtos
 	 {
 	    get => _workspaceDtos;
@@ -50,8 +52,10 @@ namespace ProcessTimeCheckerWPF
 			newProcess.StartInfo.FileName = item;
 			newProcess.StartInfo.UseShellExecute = true;
 			newProcess.StartInfo.Arguments = "-n";
+			//newProcess.StartInfo.Verb = "runas";
 			newProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
 			newProcess.Start();
+			await Task.Delay(1000);
 		  }
 	    }
 	    catch (Exception)
@@ -82,31 +86,37 @@ namespace ProcessTimeCheckerWPF
 	    }
 	 }
 
-	 private void ChooseFilesButton_Click(object sender, RoutedEventArgs e)
-	 {
-	    openFileDialog.ShowDialog();
-	 }
 
 	 private async void AddWorkSpaceButton_Click(object sender, RoutedEventArgs e)
 	 {
+	    List<string> fullList = new();
+	    fullList.AddRange(openFileDialog.FileNames.ToList());
+	    fullList.AddRange(links);
 	    WorkSpaceDto newWorkSpace = new WorkSpaceDto
 	    {
 		  WorkSpaceId = Guid.NewGuid(),
 		  WorkSpaceName = WorkSpaceNameInput.Text,
 		  WorkSpaceDescription = WorkSpaceDescriptionInput.Text,
-		  WorkSpaceItems = openFileDialog.FileNames.ToList()
+		  WorkSpaceItems = fullList
 	    };
 	    await _WS.CreateNewWorkSpace(newWorkSpace);
 	    await SetDataGridWorkSpaceData();
-
+	    WorkSpaceNameTextBox.Text = string.Empty;
+	    WorkSpaceDescriptionTextBox.Text = string.Empty;
+	    fullList.Clear();
+	    links.Clear();
+	    openFileDialog.FileName = string.Empty;
 	 }
 
 	 private void EditWorkSpace_Click(object sender, RoutedEventArgs e)
 	 {
-	    var currentWorkSpace = workSpaceDataGrid.SelectedItem as WorkSpaceDto;
-	    EditWorkspaceWindow editWorkSpace = new EditWorkspaceWindow(currentWorkSpace);
-	    editWorkSpace.Closed += async (s, args) => await SetDataGridWorkSpaceData();
-	    editWorkSpace.Show();
+	    if (workSpaceDataGrid.SelectedItem is WorkSpaceDto)
+	    {
+		  var currentWorkSpace = workSpaceDataGrid.SelectedItem as WorkSpaceDto;
+		  EditWorkspaceWindow editWorkSpace = new EditWorkspaceWindow(currentWorkSpace);
+		  editWorkSpace.Closed += async (s, args) => await SetDataGridWorkSpaceData();
+		  editWorkSpace.Show();
+	    }
 	 }
 
 	 private async void DeleteWorkSpace_Click(object sender, RoutedEventArgs e)
@@ -116,6 +126,66 @@ namespace ProcessTimeCheckerWPF
 		  await _WS.RemoveWorkSpace(selectedWorkSpace);
 		  await SetDataGridWorkSpaceData();
 	    }
+	 }
+
+	 private void ComboBoxOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+	 {
+	    var comboBox = sender as ComboBox;
+	    var selectedItem = comboBox.SelectedItem as ComboBoxItem;
+
+	    if (selectedItem == ChooseFilesButton)
+	    {
+		  openFileDialog.ShowDialog();
+
+	    }
+	    else if (selectedItem == AddLinkButton)
+	    {
+		  Window textBoxWindow = new Window
+		  {
+			Title = "Add Link",
+			Width = 300,
+			Height = 200,
+			WindowStartupLocation = WindowStartupLocation.CenterScreen
+		  };
+
+		  // Create TextBox
+		  TextBox linkTextBox = new TextBox
+		  {
+			Margin = new Thickness(10),
+			Height = 30
+		  };
+
+		  // Create Button
+		  Button button = new Button
+		  {
+			Content = "Add Link",
+			Margin = new Thickness(10),
+			Height = 30
+		  };
+
+		  // StackPanel for layout
+		  StackPanel stackPanel = new StackPanel();
+		  stackPanel.Children.Add(linkTextBox);
+		  stackPanel.Children.Add(button);
+
+		  // Set content of the window
+		  textBoxWindow.Content = stackPanel;
+
+		  // Button click event
+		  button.Click += (s, args) =>
+		  {
+			string link = linkTextBox.Text;
+			links.Add(link);
+			textBoxWindow.Close(); // Optional: close window after clicking
+		  };
+
+		  // Show the window
+		  textBoxWindow.ShowDialog(); // Use Show() if you don't want modal behavior
+
+	    }
+
+	    // Optionally reset selection so user can click again later
+	    comboBox.SelectedIndex = -1;
 	 }
    }
 }

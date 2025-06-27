@@ -42,12 +42,18 @@
 		  VerticalAlignment="Center"
 		  FontSize="14"
 		  FontFamily="Segoe UI"/>
-	    <Button x:Name="ChooseFilesButton"
-                Content="Choose Files"
-                Click="ChooseFilesButton_Click"
-                Padding="10,4"
-                FontSize="14"
-                VerticalAlignment="Center"/>
+
+
+	    <ComboBox 
+    Padding="10,4"
+    FontSize="14"
+    VerticalAlignment="Center"
+		  x:Name="ComboBoxOptions"
+    SelectionChanged="ComboBoxOptions_SelectionChanged">
+		  <ComboBoxItem x:Name="ChooseFilesButton" Content="Add File"/>
+		  <ComboBoxItem x:Name="AddLinkButton" Content="Add Link"/>
+	    </ComboBox>
+
 
 	    <Button x:Name="AddWorkSpaceButton" Click="AddWorkSpaceButton_Click" Padding="10,4">Create New Workspace</Button>
 	 </StackPanel>
