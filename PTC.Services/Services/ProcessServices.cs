@@ -1,6 +1,7 @@
 ﻿using PTC.Domain.Dtos;
 using PTC.Domain.GlobalClasses;
 using PTC.Domain.Interfaces;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace PTC.Services.Services
@@ -19,28 +20,48 @@ namespace PTC.Services.Services
 		  processNames.RemoveAll(x => x == "");
 		  if (processNames.Count > 0)
 		  {
-
 			foreach (var item in processNames)
 			{
+
 			   Process? localbyname = Process.GetProcessesByName(item).FirstOrDefault();
 
 			   if (localbyname is { })
 			   {
-				 TasksDto dto = new TasksDto
+				 try
 				 {
-				    ProcessName = localbyname.ProcessName,
+				    TasksDto dto = new TasksDto
+				    {
+					  ProcessName = localbyname.ProcessName,
 
-				    TaskName = $"{localbyname.ProcessName}",
-				    TaskOpening = localbyname.StartTime,
-				    TaskHour = FormatTimeSpan(localbyname.StartTime),
-				 };
-				 if (!string.IsNullOrEmpty(localbyname.MainWindowTitle))
-				 {
-				    dto.TaskName += $"\n ({localbyname.MainWindowTitle})";
+					  TaskName = $"{localbyname.ProcessName}",
+					  TaskOpening = localbyname.StartTime,
+					  TaskHour = FormatTimeSpan(localbyname.StartTime),
+				    };
+				    if (!string.IsNullOrEmpty(localbyname.MainWindowTitle))
+				    {
+					  dto.TaskName += $"\n ({localbyname.MainWindowTitle})";
+				    }
+				    tasks.Add(dto);
 				 }
-				 tasks.Add(dto);
+				 catch (Exception ex) when (ex is UnauthorizedAccessException || ex is Win32Exception)
+				 {
+
+				    TasksDto dto = new TasksDto
+				    {
+					  ProcessName = item,
+
+					  TaskName = $"{item} - {ex.Message} {ex.HelpLink}",
+					  TaskOpening = DateTime.Now,
+					  TaskHour = FormatTimeSpan(DateTime.Now),
+				    };
+
+				    tasks.Add(dto);
+				 }
+
 			   }
 			}
+
+
 		  }
 		  return tasks.ToList();
 	    }

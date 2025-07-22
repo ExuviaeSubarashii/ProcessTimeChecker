@@ -97,7 +97,7 @@ namespace ProcessTimeCheckerWPF
 	 {
 	    bool isTopMost = await Task.Run(() => _SS.IsTopMostAsync());
 	    this.Topmost = isTopMost;
-	    if (isTopMost is true)
+	    if (isTopMost)
 	    {
 		  WindowBorder.BorderBrush = Brushes.Blue;
 		  WindowBorder.BorderThickness = new Thickness(5);
@@ -124,17 +124,19 @@ namespace ProcessTimeCheckerWPF
 	 {
 	    int refreshTime = await _SS.GetRefreshTime();
 
-	    AddNewAppTop.Header = currentLanguage == "Turkish" ? "Uygulamalar" : "Apps";
+	    AddNewAppTop.Header = currentLanguage == "Turkish" ? "Uygulamalar (CTRL + A)" : "Apps (CTRL + A)";
 	    SettingsTop.Header = currentLanguage == "Turkish" ? "Ayarlar" : "Settings";
-	    StayOnTop.Header = currentLanguage == "Turkish" ? "Tepede Kalsın" : "Stay on Top";
+	    StayOnTop.Header = currentLanguage == "Turkish" ? "Tepede Kalsın (CTRL + T)" : "Stay on Top (CTRL + T)";
 	    ChangeTheme.Header = currentLanguage == "Turkish" ? "Temayı Değiştir" : "Change Theme";
 	    ChangeRefreshTimer.Header = currentLanguage == "Turkish" ? "Tekrarlama Süresini Ayarla" : "Choose Refresh Timer";
 	    AddNewApp.Header = currentLanguage == "Turkish" ? "Yeni Uygulama Ekle" : "Add New App";
 	    refreshRateLabel.Content = currentLanguage == "Turkish" ? $"Tekrarlama Hızı: {refreshTime}" : $"Refresh Rate: {refreshTime}";
-	    ChangeLanguage.Header = currentLanguage == "Turkish" ? "Dili Değiştir" : "Change Language";
+	    ChangeLanguage.Header = currentLanguage == "Turkish" ? "Dili Değiştir (CTRL + L)" : "Change Language (CTRL + L)";
 	    RemoveTask.Header = currentLanguage == "Turkish" ? "Listeden Kaldır" : "Remove Task";
 	    RefreshDataGrid.Header = currentLanguage == "Turkish" ? "Yenile" : "Refresh";
 	    KillTask.Header = currentLanguage == "Turkish" ? "İşlemi Sonlandır" : "Kill Task";
+	    MoreOptions.Header = currentLanguage == "Turkish" ? "Daha Fazla" : "More";
+	    ShowWorkSpaces.Header = currentLanguage == "Turkish" ? "Çalışma Alanlarını Göster (CTRL + W)" : "Show Workspaces (CTRL + W)";
 	 }
 	 private async void ChangeTheme_Click(object sender, RoutedEventArgs e)
 	 {
@@ -172,7 +174,7 @@ namespace ProcessTimeCheckerWPF
 		  }));
 	    }
 	 }
-	 private void RestartApplication()
+	 private static void RestartApplication()
 	 {
 	    Process.Start(GlobalVariables.currentExecutablePath);
 	    Application.Current.Shutdown();
@@ -227,6 +229,10 @@ namespace ProcessTimeCheckerWPF
 	    chooseTimer.ShowDialog();
 	 }
 	 private async void ChangeLanguage_Click(object sender, RoutedEventArgs e)
+	 {
+	    await SwitchLanguage();
+	 }
+	 private async Task SwitchLanguage()
 	 {
 	    string msg = currentLanguage == "Turkish" ? "Uygulama dilini İngilizce'ye çevirmek istediğinizden emin misiniz?" : "Are you sure you want to change the application language to Turkish?";
 
@@ -308,11 +314,33 @@ namespace ProcessTimeCheckerWPF
 		  return;
 	    }
 	 }
-
 	 private void ShowWorkSpaces_Click(object sender, RoutedEventArgs e)
 	 {
 	    WorkSpaces workSpaces = new WorkSpaces();
 	    workSpaces.ShowDialog();
+	 }
+
+	 private async void Window_KeyDown(object sender, KeyEventArgs e)
+	 {
+	    if (Keyboard.IsKeyDown(Key.LeftCtrl) && e.Key == Key.W)
+	    {
+		  WorkSpaces workSpaces = new WorkSpaces();
+		  workSpaces.ShowDialog();
+	    }
+	    else if (Keyboard.IsKeyDown(Key.LeftCtrl) && e.Key == Key.T)
+	    {
+		  await _SS.ChangeTopMostPropertyAsync();
+		  await UpdateTopMost();
+	    }
+	    else if (Keyboard.IsKeyDown(Key.LeftCtrl) && e.Key == Key.A)
+	    {
+		  AddNewApp newApp = new AddNewApp();
+		  newApp.ShowDialog();
+	    }
+	    else if (Keyboard.IsKeyDown(Key.LeftCtrl) && e.Key == Key.L)
+	    {
+		  await SwitchLanguage();
+	    }
 	 }
    }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProcessTimeCheckerWPF"
         mc:Ignorable="d"
-        Title="WorkSpaces" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="WorkSpaces" Height="450" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
 
    <Grid Margin="10">
 	 <Grid.RowDefinitions>

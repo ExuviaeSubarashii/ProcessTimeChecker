@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Process Time Checker" Height="400" Width="800" Loaded="Window_Loaded" Icon="/PTC.png" WindowStartupLocation="CenterScreen">
+        Title="Process Time Checker" Height="600" Width="1200" Loaded="Window_Loaded" Icon="/PTC.png" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown">
 
    <Window.Resources>
 	 <!-- Style for Menu -->
@@ -51,8 +51,9 @@
 			<MenuItem Name="AddNewApp"
                           Click="AddNewApp_Click" />
 		  </MenuItem>
-		  <MenuItem Name="WorkSpacesButton">
+		  <MenuItem Name="MoreOptions">
 			<MenuItem Name="ShowWorkSpaces"
+					
                Click="ShowWorkSpaces_Click" />
 		  </MenuItem>
 		  <Label Name="refreshRateLabel"/>
